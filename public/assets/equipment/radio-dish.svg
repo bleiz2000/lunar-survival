@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="dishFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8EDF3"/>
+      <stop offset="55%" stop-color="#D3DAE4"/>
+      <stop offset="100%" stop-color="#B9C2CF"/>
+    </linearGradient>
+    <linearGradient id="dishBack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9AA3B1"/>
+      <stop offset="100%" stop-color="#79828F"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="48" cy="90" rx="30" ry="5.5" fill="#0B0E14" opacity="0.18"/>
+
+  <!-- tripod legs -->
+  <g stroke="#7A8090" stroke-width="4" stroke-linecap="round">
+    <path d="M44 74 L24 89"/>
+    <path d="M52 74 L72 87"/>
+    <path d="M48 76 L48 91"/>
+  </g>
+
+  <!-- equipment box -->
+  <rect x="31" y="60" width="34" height="16" rx="4" fill="#59606E" stroke="#454B58" stroke-width="2.5"/>
+  <circle cx="38" cy="68" r="2.8" fill="#E25757"/>
+  <circle cx="46" cy="68" r="2.8" fill="#8A91A0"/>
+  <circle cx="54" cy="68" r="2.8" fill="#4E5562"/>
+  <rect x="58" y="65" width="4" height="6" rx="1.5" fill="#8A91A0"/>
+
+  <!-- mast -->
+  <rect x="46" y="38" width="4" height="24" rx="2" fill="#8A91A0"/>
+  <circle cx="48" cy="62" r="4" fill="#6E7683" stroke="#4E5562" stroke-width="1.5"/>
+
+  <!-- dish, tilted towards the sky -->
+  <g transform="rotate(-20 48 30)">
+    <!-- back of the dish -->
+    <ellipse cx="48" cy="33" rx="26" ry="12" fill="url(#dishBack)"/>
+    <!-- concave face -->
+    <ellipse cx="48" cy="30" rx="26" ry="12.5" fill="url(#dishFace)" stroke="#9FA9B7" stroke-width="2.2"/>
+    <ellipse cx="48" cy="30" rx="20" ry="9" fill="#C2CBD8" opacity="0.75"/>
+    <ellipse cx="48" cy="30" rx="20" ry="9" fill="none" stroke="#AEB8C6" stroke-width="1.4"/>
+    <path d="M48 17.5 L48 42.5" stroke="#AEB8C6" stroke-width="1.2" opacity="0.9"/>
+    <path d="M22 30 L74 30" stroke="#AEB8C6" stroke-width="1.2" opacity="0.55"/>
+
+    <!-- torn panel: one sector is missing and charred -->
+    <path d="M60 22 A26 12.5 0 0 1 74 28 L64 31 Z" fill="#59606E" opacity="0.55"/>
+    <path d="M60 22 L74 28 L64 31" fill="none" stroke="#4B525E" stroke-width="1.8" stroke-linejoin="round"/>
+    <!-- crack across the face -->
+    <path d="M34 25 L42 30 L38 34 L47 36" fill="none" stroke="#6E7683" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- feed horn -->
+    <line x1="48" y1="30" x2="48" y2="14" stroke="#9EA9B7" stroke-width="2"/>
+    <circle cx="48" cy="13" r="3.2" fill="#F09A4E" stroke="#C97B36" stroke-width="1.2"/>
+    <line x1="34" y1="24" x2="48" y2="14" stroke="#9EA9B7" stroke-width="1.4" opacity="0.8"/>
+    <line x1="62" y1="24" x2="48" y2="14" stroke="#9EA9B7" stroke-width="1.4" opacity="0.8"/>
+  </g>
+
+  <!-- dangling cable (broken) -->
+  <path d="M60 58 Q68 62 66 70" fill="none" stroke="#4B525E" stroke-width="2" stroke-linecap="round"/>
+  <!-- loose panel fragment on the ground -->
+  <path d="M72 78 L80 80 L78 85 Z" fill="#B9C2CF" stroke="#9FA9B7" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>

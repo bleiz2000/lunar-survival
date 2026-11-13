@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="300" viewBox="0 0 1280 300" preserveAspectRatio="none">
+  <path d="M0 150 Q180 96 360 128 Q540 158 700 122 Q900 82 1060 124 Q1180 150 1280 132 L1280 300 L0 300 Z" fill="#3a4055"/>
+  <path d="M0 190 Q200 150 420 176 Q640 200 840 168 Q1040 140 1280 178 L1280 300 L0 300 Z" fill="#2f3548"/>
+  <path d="M0 232 Q260 200 520 224 Q820 252 1020 218 Q1140 202 1280 222 L1280 300 L0 300 Z" fill="#262b3c"/>
+  <g fill="#1c2236" opacity="0.9">
+    <ellipse cx="240" cy="250" rx="86" ry="24"/>
+    <ellipse cx="700" cy="276" rx="120" ry="28"/>
+    <ellipse cx="1080" cy="262" rx="70" ry="18"/>
+  </g>
+  <g fill="#4a5472" opacity="0.5">
+    <ellipse cx="240" cy="238" rx="70" ry="6"/>
+    <ellipse cx="700" cy="262" rx="96" ry="7"/>
+    <ellipse cx="1080" cy="252" rx="54" ry="4"/>
+  </g>
+  <path d="M150 170 L166 158 L184 168 L172 176 Z" fill="#4a5472" opacity="0.7"/>
+  <path d="M900 150 L918 140 L934 152 L918 158 Z" fill="#4a5472" opacity="0.6"/>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <defs>
+    <radialGradient id="ocean" cx="38%" cy="34%" r="72%">
+      <stop offset="0%" stop-color="#74B7EA"/>
+      <stop offset="55%" stop-color="#3E86CB"/>
+      <stop offset="100%" stop-color="#2A5E9A"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="78%" stop-color="#8fd0f7" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#8fd0f7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="90" cy="90" r="90" fill="url(#halo)"/>
+  <circle cx="90" cy="90" r="74" fill="url(#ocean)"/>
+  <path d="M42 66 Q54 48 74 50 Q86 54 82 68 Q70 80 56 82 Q44 80 42 66 Z" fill="#6CC08C"/>
+  <path d="M96 40 Q120 38 128 56 Q124 74 104 76 Q92 68 94 54 Z" fill="#5FB37F"/>
+  <path d="M52 100 Q70 92 84 104 Q88 122 72 132 Q56 130 50 116 Z" fill="#6CC08C"/>
+  <path d="M104 96 Q124 92 132 108 Q130 126 112 128 Q98 120 98 108 Z" fill="#5FB37F"/>
+  <path d="M126 138 Q136 134 142 142 Q138 150 128 148 Z" fill="#6CC08C" opacity="0.9"/>
+  <g fill="#EAF5FF" opacity="0.85">
+    <path d="M32 74 Q52 66 72 72 Q58 80 40 78 Z"/>
+    <path d="M90 62 Q112 56 132 64 Q116 72 98 69 Z" opacity="0.8"/>
+    <path d="M44 112 Q62 106 80 112 Q66 120 50 118 Z" opacity="0.7"/>
+    <path d="M104 116 Q122 112 136 120 Q120 126 108 122 Z" opacity="0.6"/>
+  </g>
+  <path d="M22 78 A74 74 0 0 0 30 130" fill="none" stroke="#EAF5FF" stroke-width="3" opacity="0.35"/>
+  <circle cx="90" cy="90" r="74" fill="none" stroke="#9BD3F5" stroke-width="2" opacity="0.5"/>
+</svg>

@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
+import { SCENE_BOOT, SCENE_PRELOAD } from '../game/constants.js';
 
 export class BootScene extends Phaser.Scene {
   constructor() {
-    super('Boot');
+    super(SCENE_BOOT);
   }
 
   create() {
-    // Placeholder boot scene. Gameplay arrives in a later task.
+    this.scene.start(SCENE_PRELOAD);
   }
 }
