@@ -634,3 +634,42 @@ stage, commit, and push the changes.
 **Next recommended step:**
 Continue the documented rover progression with communications/scanning as
 separate repair stages when their P1/P2 scope is scheduled.
+
+---
+
+## 2026-11-15 — Refresh public project presentation
+
+**Agent/model:**
+DeepSeek V4.1 Flash 1017 (OpenCode).
+
+**Requested task:**
+Update the project presentation for NASA Space Apps and GitHub based on the actual current prototype, and carry out the requested changes directly.
+
+**Repository state before work:**
+- Current branch: `main`, one local commit ahead of `origin/main` (`d45a47f`).
+- Working tree: clean.
+- Relevant files inspected: `README.md`, `docs/GAME_DESIGN.md`, `package.json`, `src/main.js`, and recent `CHANGELOG.md` entries.
+
+**Files created:** None.
+
+**Files modified:**
+- `README.md` — replaced obsolete initialization-only claims and stale project structure with the current playable-slice summary, controls, run/build instructions, verified technology/context references, and project links.
+- `CHANGELOG.md` — recorded this task.
+- GitHub repository metadata — updated repository description and added relevant topics (`phaser`, `lunar`, `survival-game`, `nasa-space-apps`).
+
+**Files deleted:** None.
+
+**Implementation details:**
+- Described the current opening sequence, repair quests, Earth communication, and survey-rover discovery/basic power-up without claiming a complete survival game.
+- Clearly stated that NASA datasets are not directly integrated; NASA links are background context only.
+- Kept the repository private setting unchanged (`package.json` remains `private: true`, which is an npm package setting, not GitHub visibility).
+
+**Verification performed:**
+- `npm run build` — passed; Vite reported its existing large-bundle advisory.
+- GitHub CLI authentication verified with `gh auth status`.
+
+**Known issues / incomplete work:**
+- The published GitHub `main` branch did not yet contain local commit `d45a47f` when this entry was written; pushing is still required for GitHub's README to show the current prototype.
+
+**Next recommended step:**
+Commit the documentation update and push `main` so the public repository presents the current project state.

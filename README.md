@@ -1,50 +1,35 @@
-# Lunar Survival
+# LUNAR: Survival Protocol
 
-A 2D top-down survival and base-building game set on the Moon, inspired by
-[MewnBase](https://cairn4.itch.io/mewnbase). Built with JavaScript ES Modules,
-[Phaser 3](https://phaser.io/) and [Vite](https://vite.dev/).
+A 2D top-down lunar survival game prototype about an astronaut stranded after an emergency landing. Repair the spacecraft, reconnect with Earth, and locate and power up a disabled survey rover.
 
-## Requirements
+Built with [JavaScript ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [Phaser 3](https://phaser.io/), and [Vite](https://vite.dev/). The story and gameplay are fictional and science-inspired; no NASA dataset is directly integrated into the current prototype.
 
-- Node.js 20+
-- npm
+## Current prototype
 
-## Getting started
+The current slice includes an opening sequence, interactive spacecraft repair quests, a communication with Earth, and discovery and basic power-up of a survey rover. It is an early prototype, not a complete survival or base-building game. Resource simulation, rover driving, scanning, transport, automation, and a full campaign remain future work.
+
+## Run locally
+
+Requirements: Node.js 20+ and npm.
 
 ```bash
 npm install
 npm run dev
 ```
 
-The dev server starts at `http://localhost:5173`.
+Open the local URL printed by Vite. Use **WASD** or the **arrow keys** to move and **E** to interact. Build the production bundle with `npm run build`; preview it locally with `npm run preview`.
 
-## Build
+## Technology and context
 
-```bash
-npm run build     # production build in dist/
-npm run preview   # serve the production build locally
-```
+- [Phaser 3](https://phaser.io/) — browser game framework
+- [Vite](https://vite.dev/) — development server and build tool
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) — language reference
+- [NASA Open Data Portal](https://data.nasa.gov/) — relevant open-data resource; not directly used by the prototype
+- [Lunar Reconnaissance Orbiter data archive](https://pds-geosciences.wustl.edu/missions/lro/) — lunar-science context, not directly used by the prototype
+- [Lunar Reconnaissance Orbiter Camera](https://lroc.im-ldi.com/) — lunar-science context, not directly used by the prototype
+- [MewnBase](https://cairn4.itch.io/mewnbase) — visual/genre reference
 
-## Project structure
+## Project links
 
-```
-lunar-survival/
-├── public/
-│   └── assets/          # characters, buildings, environment, ui, sounds
-├── src/
-│   ├── main.js          # game entry point (Phaser config)
-│   ├── config/          # game constants and configuration
-│   ├── scenes/          # Phaser scenes
-│   ├── entities/        # game entities (player, rovers, ...)
-│   ├── systems/         # game systems (oxygen, power, ...)
-│   ├── world/           # terrain and world generation
-│   └── ui/              # UI logic, kept separate from game logic
-├── index.html
-├── package.json
-├── vite.config.js
-└── README.md
-```
-
-## Status
-
-Project initialization only — no gameplay implemented yet.
+- [GitHub repository](https://github.com/bleiz2000/lunar-survival)
+- [NASA Space Apps Challenge](https://www.spaceappschallenge.org/2026/)
