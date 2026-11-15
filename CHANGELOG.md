@@ -719,3 +719,32 @@ Place the project demo inside the repository under `docs/demo/`, obtain direct p
 
 **Next recommended step:**
 Paste the final field values into the NASA Project page, verify the raw demo link in a private browser, and submit before the deadline.
+
+---
+
+## 2026-11-15 — Clarify that the survey rover is a civilian vehicle
+
+**Agent/model:**
+DeepSeek V4.1 Flash 1017 (OpenCode).
+
+**Requested task:**
+Clarify the rover shown in the screenshots and update the local project files accordingly.
+
+**Files modified:**
+- `README.md` — added a one-line clarification that the rover is a fictional, unarmed civilian research vehicle, not military equipment.
+- `NASA_SPACE_APPS_SUBMISSION.md` — added the same clarification to the Detailed Project Description.
+- `docs/demo/demo-script.md` — narration now explicitly calls the rover unarmed and civilian.
+- `docs/demo/lunar-survival-demo-slides.pdf` — regenerated; the cover and gameplay captions now say the rover is fictional/unarmed.
+- `docs/demo/lunar-survival-demo.mp4` — regenerated from the updated slides; still 28 seconds.
+- `CHANGELOG.md` — recorded this task.
+
+**Verification performed:**
+- `ffprobe` — 28-second duration.
+- `pdfinfo` — seven pages.
+- `git diff --check` — passed.
+
+**Known issues / incomplete work:**
+- None.
+
+**Next recommended step:**
+Keep the user-facing wording consistent if the rover artwork is redesigned later.

@@ -4,7 +4,7 @@
 
 **0:04–0:11** — Explore the lunar surface and complete hands-on repairs to restore the spacecraft’s systems and contact Earth.
 
-**0:11–0:18** — Follow the mission clue to a disabled survey rover, inspect it, and restore its basic power.
+**0:11–0:18** — Follow the mission clue to a disabled, unarmed survey rover, inspect it, and restore its basic power. It is a fictional civilian research vehicle, not military equipment.
 
 **0:18–0:24** — Built with JavaScript, Phaser 3, and Vite, this is an early playable slice of a larger lunar survival concept.
 

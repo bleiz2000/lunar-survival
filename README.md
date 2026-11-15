@@ -6,7 +6,7 @@ Built with [JavaScript ES modules](https://developer.mozilla.org/en-US/docs/Web/
 
 ## Current prototype
 
-The current slice includes an opening sequence, interactive spacecraft repair quests, a communication with Earth, and discovery and basic power-up of a survey rover. It is an early prototype, not a complete survival or base-building game. Resource simulation, rover driving, scanning, transport, automation, and a full campaign remain future work.
+The current slice includes an opening sequence, interactive spacecraft repair quests, a communication with Earth, and discovery and basic power-up of a survey rover. The rover is a fictional, unarmed civilian research vehicle, not military equipment. It is an early prototype, not a complete survival or base-building game. Resource simulation, rover driving, scanning, transport, automation, and a full campaign remain future work.
 
 ## Run locally
 

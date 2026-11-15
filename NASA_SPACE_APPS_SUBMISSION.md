@@ -22,7 +22,7 @@ https://github.com/bleiz2000/lunar-survival
 
 LUNAR: Survival Protocol is a 2D, top-down browser-game prototype about surviving after an emergency lunar landing. The player explores the area around a damaged spacecraft, completes repair tasks, restores communications with Earth, and follows a mission clue to a disabled survey rover.
 
-The current prototype focuses on the opening story and quest sequence: an intro, interactive repairs, communication with Earth, and the discovery and basic power-up of the rover. It is an early playable slice, not a completed survival or base-building game. The longer-term design explores resource management and the gradual development of a lunar outpost.
+The current prototype focuses on the opening story and quest sequence: an intro, interactive repairs, communication with Earth, and the discovery and basic power-up of the rover. The rover is a fictional, unarmed civilian survey vehicle, not military equipment. It is an early playable slice, not a completed survival or base-building game. The longer-term design explores resource management and the gradual development of a lunar outpost.
 
 The game is built with JavaScript ES modules, Phaser 3, and Vite. Its setting draws on lunar-science context, but its characters, story, and rover are fictional. NASA facilities or datasets are not presented as direct sources for the game’s content.
 
