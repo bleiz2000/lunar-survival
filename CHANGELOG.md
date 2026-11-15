@@ -351,3 +351,286 @@ E2 and E6. Do not start P2 systems, do not add dependencies, do not commit.
 Turn the survival placeholders into a real day cycle: advance the day on a timer, drain
 oxygen/food/water/power, and show the first pressure event before opening the construction
 system.
+
+---
+
+## 2026-11-14 — День 1: интро-катсцена, цепочка квестов 2.1–2.8 и переработка UI/UX
+
+**Agent/model:** OpenCode agent (Quasar).
+
+**Requested task:**
+Игрокирвать День 1: интро-катсцену «Новая игра» и восемь квестов — ремонт антенны,
+подключение электроснабжения, первая передача, заклеивание окна в иллюминаторе,
+диагностика и ремонт двигателя, трихattempt-ный разговор с Земёй, сервисный терминал.
+Вся в.scrollView игре на английском. Финальный список требований пользователей:
+скотч должен лечь ровно на трещину в иллюминаторе, не висять в воздухе; дверь и возможность
+залезть в корабль полностью удалены (интерьер не делится); в кабине интро не должно
+быть светлых артефактков («проплешины»); игрок не проходит сквозь стены корпуса;
+провод питания идёт от нижней солнечной панели к антенне. Ранее в же-менутной
+переработке UI/UX: подсказка [E] в виде плавающего тега строго над объектом в мире,
+панель прогресса действия вместо модальных, HUD с жесткими границами и переносом текста.
+
+**Repository state before work:**
+- Current branch: `main`; последний коммит `d513f3f` запушен; изменений не коммитили
+- Working tree status: примерно «день 1»: интро + цепочка 2.1–2.8 удобнее текущего коммита
+  (список файлов — ниже по факту из `git status`)
+- Relevant files inspected: `src/scenes/GameScene.js`, `src/scenes/UIScene.js`,
+  `src/scenes/IntroScene.js`, `src/world/Outpost.js`, `src/world/WorldMap.js`,
+  `src/systems/InteractionSystem.js`, `src/systems/QuestSystem.js`,
+  `src/systems/MovementSystem.js`, `src/entities/Astronaut.js`,
+  `src/game/constants.js`, `src/ui/*`, `public/assets/buildings/cabin.svg`
+
+**Files created:**
+- `src/scenes/IntroScene.js` — интро-катсцена в фазах (space → fade → cabin → crash →
+  black → calls → no-signal) с виньеттой и миссионными часами
+- `src/ui/WorldPrompt.js` — наемный тег [E] над объектом в мировых координатах
+- `src/ui/WorldAction.js` — панель прогресса действия в мире (`MODAL` + `ACTION_END {id}`)
+- `src/ui/DialoguePanel.js`, `src/ui/DiagnosticsPanel.js`, `src/ui/TerminalPanel.js`,
+  `src/ui/typewriter.js`, `src/data/dialogue.js`
+- `public/assets/buildings/cabin.svg` (эллиптический иллюминатор, тёмное отчего стальное)
+  и `spaceship.svg`
+- `public/assets/characters/astronaut-seated.svg`, `environment/space-view.svg`,
+  `environment/star.svg`, `environment/terminal-map.svg`
+- `public/assets/effects/crack.svg`, `effects/light-glow.svg`, `effects/tape-patch.svg`
+- `public/assets/equipment/antenna-upright.svg`, `equipment/cable.svg`,
+  `equipment/console.svg`, `equipment/engine.svg`
+- `public/assets/ui/icon-engine.svg`, `ui/icon-radio-off.svg`
+
+**Files modified:**
+- `src/game/constants.js` — `OUTPOST_LAYOUT` (engine/console/arrayConnector/flag/solar),
+  радиусы взаимодействия (WINDOW_RADIUS 92→118),涡轮增压ActionButton ACTION_DURATION,
+  TYPE_SPEED, INTRO, LANDER_ANGLE, UI токены панелей
+- `src/world/Outpost.js` — спрайт аппарата и его коллизия перенесли сюда (единый владец:
+  154×148 незадатый телю блок корпуса из `WorldMap` не рисуется дважды);`
+  кабель `drawCable` — квадратичнаяепезье; скотч по трещине `WINDOW_TAPE_LOCAL`;
+  антенна получила собственный блок; сервисная панель
+- `src/world/WorldMap.js` — перестал рисовать-и-раздвоить аппарат, сцена чистая
+- `src/scenes/GameScene.js` — композицессор: флагами гейте-триггер матрощам;
+  WorldPrompt/WorldAction; сброс `exiting` при `create` (Phaser переиспользуетный экземпляр)
+- `src/systems/InteractionSystem.js` — `PROMPT_SHOW` передаёт `{sprite}`,
+  единлагий fiat JustDown
+- `src/systems/QuestSystem.js` — флаг-цепочка, `stepFromFlags`, диагностика/терминал/
+  счётчик комманд-2
+- `src/ui/HUD.js` — PANEL_STYLE, жесткие граница, wordWrap + `setMaxLines(2)`
+- `src/ui/DebugOverlay.js` — добавлен `destroy()` (его отсутствие ломило выхив из меню)
+- `src/ui/UiButton.js`, `src/scenes/UIScene.js`, `src/scenes/MainMenuScene.js`,
+  `src/game/events.js` (ACTION_START удалён), `src/game/state.js`, `src/game/assets.js`,
+  `src/main.js` — приведение к новым фазам и умным журналом
+
+**Files deleted:**
+- `src/ui/MessagePanel.js` (заменен DialoguePanel.js)
+
+**Implementation details:**
+- **Стены.** Единый телеспереград корпуса (154×148) в шат-локальных координатах (0, −10)
+  за `soldimeters` `Outpost` и основание антены (44×24); спрайт аппарата теперь рисуется
+  только в одном месте. Спавна-декорация (1320, 1350) проверяется веренца телеки обывника.
+- **Кабель.** Соединение `arrayConnector {x:-184, y:196}` — у основания нижней панеля
+  (центр {x:-226, y:148}); интерактивность `solar-array` закреплена на нижней панели;
+  кабель `{junk}` → `{anennaImage.x−14, y−2}` с прогим пересагом.
+- ** Окно.** Скотчзафиксирован на трещине (`WINDOW_TAPE_LOCAL {x:3, y:-28}`, итоговый
+  0.24 — 34×26 px); радиус окна точечно поднят до 118, чтобы с лидерской остановки
+  против корпуса до стекла ~107 px выступала [E].
+- **Интерьер забракован целиком.** Хатч, его свечение и все оконные обработчики
+  взаимодействия удалены; непрозрачный список составляющих из интеракторов —
+  porthole, engine, engine-service-panel, antenna, solar-array.
+- **Кабина интро.** `addGlassOverlay` растворена; блик-арка, трещинная сеть, белый
+  проходящий корабельудалены; в `cabin.svg` блекнули лампы, шпилики и светные рамки —
+  живой инвентар сцены «cabin» содержит 0 ярких графических команд.
+- **Архитектура чисит样式:** гал报到ет на флагах; UI изолирована от логики геймплея;
+  панельные разметки держают долгого текста в одинбилью.
+- Полезная срочность текущего внедрения: шапки цифр панели HUDне «обретают» друг друга.
+- Зависимостей не добавлено. Не делано коммитов и пуши (по требованию).
+
+**Verification performed:**
+- `npx vite build` — зелёная (~15.6 s, только имевшийся {}),
+  объявляет о предупреждении кэша.
+- По всем успешным отмыслам честная прогонка в браузере, со стенами реально
+  взорована физика и в самом коммитовом колл-списке.
+- Спавна (1320, 1350) жебрид-экземпляра: тело игры не пересекает блок корпуса.
+- 2.1—2.8: восемь флажков выдается в правильной последовательности; итоговый шаг
+  `prologue-done`, флаги: `isAntennaFixed, isPowerOn, isComms1Done, isWindowTaped,
+  engineDiagnosed, isEngineFixed, isComms2Done, isCoordinatesReceived` — все из事事.
+- Стык против корпуса (подлинный нажатый клавиша W 700 мс) с остановкой на (1144, 1202):
+  верх тела = 1204 = нижнюю граню корпуса (отклонение 0 px); в этом положении
+  дوجد [E] у окна (до трещины 94 px < 118).
+- Скотч на трещине: центры с расстоянием 5 px, размеры 34×26 против трещины 31×31;
+  скотч лежит поверх неё по depth.
+- Кабель: соединение в мировых координатах (956, 1336) от центра корабля (−184, +196) —
+  ниже нижней панели (центр −226, +148); конечная точка исторически отдаётся
+  антени на (1294, 1352); кабель виден.
+- Диагностика открывает ENGINE DAMAGED; после ремонта наклон корпуса −0.122 → 0.
+- Ревизия последовательности выходов из меню: меню — активна, Game/UI — закрыты,
+  ошибки в консоли браузера — 0.
+- Снимки: `/tmp/opencode/lunar-shots/16-cabin-dim.png`, `17-cable-lower-panel.png`,
+  `18-window-tape-wall.png` с бронзовыми наклейками и кабельной связи.
+- Окно, делющие дополнительно периодические фоны `GAME_WIDTH/HEIGHT` а НЕ CANVAS:
+  скриншоты записывают текущие фазы: «cabin», кабельная связь «comms1», зимнее окно
+  со скотчем с пред.getStateая стеной.
+
+**Known issues / incomplete work:**
+- Ходьба остаётся презентациональной (наклон + пыль), пока нет спрайтовых кадров
+- Звука нет, звуковые ассеты не осеяются; сохранения нет
+- Интерьер корабля отсрочен и на это период не планируется; возможна декоративная
+  панель под будущий хатч — но на это момент не есть (класска дверь в списке состава)
+- Изменения не коммитили (по экзيقу)
+- `Empty Text File.txt` — предвысно существуют / не списком, не трогали
+
+**Next recommended step:**
+День 2: перетасыви лунную ночь — время/день, расход ресурсов во времени;
+или больше обработки сохранений — чем раньше: чем главнее для вертикального среза.
+
+---
+
+## 2026-11-15 — Prologue cockpit fixes and the spore-sample quest
+
+**Agent/model:**
+DeepSeek V4.1 Flash Free (OpenCode).
+
+**Requested task:**
+Fix the prologue rewrite per strict instructions: keep the three Russian lines
+untranslated, keep the existing structure and visual quality, gently polish the
+gameplay loop right after the prologue, and add a second quest about searching
+for and collecting mushrooms on the lunar surface.
+
+**Repository state before work:**
+- Current branch: `main`
+- Working tree status: many pre-existing uncommitted changes from the earlier
+  prologue pass (`src/scenes/IntroScene.js` and several assets untracked).
+- Relevant files inspected: `src/scenes/IntroScene.js`, `src/scenes/GameScene.js`,
+  `src/systems/QuestSystem.js`, `src/game/state.js`, `src/game/constants.js`,
+  `src/game/assets.js`, `src/data/items.js`, `src/world/WorldMap.js`,
+  `src/world/Outpost.js`, `src/entities/Interactable.js`, `src/ui/HUD.js`,
+  `docs/GAME_DESIGN.md`.
+
+**Files created:**
+- `public/assets/environment/mushroom.svg` — bioluminescent bloom cluster.
+- `public/assets/ui/icon-mushroom.svg` — cargo/objective icon.
+- `src/world/MushroomField.js` — deterministic bloom placement, glow/sway/spores,
+  interactables and the collect animation.
+
+**Files modified:**
+- `src/scenes/IntroScene.js` — fixed a runtime `const label` temporal-dead-zone
+  crash in `buildPanel`; extended the dash slab below the frame and continued the
+  cabin wall so zoomed shots have no bare backdrop; reframed the wake-up close-up
+  (zoom 1.34, centre 920, 566); hid the COMMS header for the NO SIGNAL readout;
+  reduced the porthole Earth to 0.68 with an atmosphere ring, and brightened the
+  starfield.
+- `src/scenes/GameScene.js` — builds `MushroomField`, merges its interactables,
+  gates them to the sample step, resolves collection (inventory, float text,
+  toast), and polishes the handoff (900 ms fade-in, zoom settle 1.272 → 1.2,
+  480 ms input hold, later onboarding toast).
+- `src/systems/QuestSystem.js` — `collect-mushrooms` / `mushroom-samples-secured`
+  steps, progress payload, `collectMushroom()`, terminal toast.
+- `src/game/state.js` — `isMushroomsDone` flag and `quest.mushroomsCollected`.
+- `src/game/constants.js` — `MUSHROOM_TOTAL`, `MUSHROOM_RADIUS`.
+- `src/game/assets.js`, `src/data/items.js` — mushroom assets and item definition.
+
+**Files deleted:**
+None.
+
+**Implementation details:**
+- The three Russian lines are unchanged (`LINE_HOME`, `LINE_MAYDAY`,
+  `LINE_RADIO`); all captions stay on the HUD camera, so they never shake.
+- The sample quest extends the existing flag chain after `check-computer`, so the
+  current step is still derived only from flags. Three blooms sit in a loose ring
+  around the lander, nudged at runtime out of boulder/outpost colliders.
+- Collecting uses the existing `Interactable` / `InteractionSystem` / `HUD`
+  progress / toast / `InventorySystem` paths; no new framework or UI component.
+
+**Verification performed:**
+- Commands executed: `npm run build`; headless Chromium via CDP.
+- Build result: passes (41 modules transformed).
+- Manual checks: cockpit, alarm/mayday and wake frames reviewed as screenshots;
+  real E-key input collected `spore-bloom-1` (objective 1/3, inventory 1);
+  all three samples produced `mushroom-samples-secured` and 3× Spore Sample in
+  cargo; no runtime exceptions during scene restart.
+
+**Known issues / incomplete work:**
+- The headless renderer runs the game clock at roughly 10% speed, so intro frames
+  were verified with direct state setup and scaled time; the final `realize`
+  pull-back was not re-checked frame by frame after the wake reframing.
+
+**Next recommended step:**
+Play the full prologue once in a normal browser to judge the intro → gameplay
+handoff timing, then extend the sample quest into the trip to the testing base.
+
+---
+
+## 2026-11-15 — English prologue and first survey-rover repair
+
+**Agent/model:**
+DeepSeek V4.1 Flash 1017 (OpenCode).
+
+**Requested task:**
+Return all interface text to English, preserve the three specified English
+prologue lines exactly, follow the documented next P1 quest instead of
+undocumented wild mushroom gathering, update the tracker and changelog, then
+stage, commit, and push the changes.
+
+**Repository state before work:**
+- Current branch: `main`.
+- Working tree: already contained extensive unstaged and untracked work for the
+  prologue, UI, world, and previous mushroom quest; this task was performed in
+  that same working tree.
+- Relevant files inspected: `docs/GAME_DESIGN.md`, `TODO.md`,
+  `src/scenes/IntroScene.js`, `src/scenes/GameScene.js`,
+  `src/systems/QuestSystem.js`, `src/game/state.js`,
+  `src/game/constants.js`, `src/game/assets.js`, `src/world/Outpost.js`,
+  `src/world/WorldMap.js`, `src/entities/Interactable.js`, and UI systems.
+
+**Files created:**
+- `src/entities/Rover.js` — rover placement, interaction, power-up visuals and
+  collider.
+- `public/assets/rover/rover-derelict.svg` and
+  `public/assets/rover/rover-powered.svg` — matching derelict/online artwork.
+
+**Files modified:**
+- `src/scenes/IntroScene.js` — set the three lines exactly to “Home, sweet
+  home”, “Houston, Houston, help...”, and “Damn, the radio is broken”.
+- `src/scenes/GameScene.js`, `src/systems/QuestSystem.js`, `src/game/state.js`,
+  `src/game/constants.js`, and `src/game/assets.js` — replaced mushroom quest
+  wiring/state/assets with the `find-rover` → `repair-rover` → `rover-ready`
+  chain and the timed `rover-power` action.
+- `src/data/dialogue.js` and `public/assets/environment/terminal-map.svg` — the
+  Earth packet now describes a fictional bio-research outpost and a silent
+  rover on the route, consistent with the design document.
+- `src/data/items.js` — removed the mushroom inventory item.
+- `TODO.md` — checked off the documented first rover discovery/repair task and
+  retained automation as future work.
+- `CHANGELOG.md` — appended this factual record; the preceding entry is retained
+  as an append-only historical record of the now-removed implementation.
+
+**Files deleted:**
+- `src/world/MushroomField.js`.
+- `public/assets/environment/mushroom.svg`.
+- `public/assets/ui/icon-mushroom.svg`.
+
+**Implementation details:**
+- Followed `docs/GAME_DESIGN.md` §6 and its P1 item 6: a nearby disabled survey
+  rover, found by inspection and given a first basic power repair. No driving,
+  scanning, transport, or automation was added.
+- Placed the rover about 581 world pixels from the lander on the north-east
+  bearing, with deterministic clearance search, a chassis collider, a derelict
+  amber beacon and an online teal beacon.
+- Kept the later biological-outpost/culture objective as a campaign goal; only
+  the unsupported crash-spill/wild-sample mechanic and its assets were removed.
+
+**Verification performed:**
+- Commands executed: `npm run build`; headless Chromium/CDP interaction run.
+- Build result: passed (41 modules transformed; Vite emitted its existing
+  large-bundle advisory).
+- Manual checks: real E-key interaction advanced inspection to repair, the
+  timed action changed the rover texture/beacon and completed the objective;
+  scene restart reset quest state; no runtime console errors were observed.
+  Screenshots of the derelict, action-in-progress, and powered rover were
+  captured under `/tmp/opencode/`.
+
+**Known issues / incomplete work:**
+- The full prologue sequence was not replayed end-to-end in this verification;
+  the quest chain was set to its post-terminal state for the rover test.
+- Historical changelog text about the now-removed mushroom implementation is
+  retained to obey the append-only changelog rule.
+
+**Next recommended step:**
+Continue the documented rover progression with communications/scanning as
+separate repair stages when their P1/P2 scope is scheduled.

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="150" viewBox="0 0 240 150">
+  <defs>
+    <linearGradient id="cableSheath" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A4F58"/>
+      <stop offset="100%" stop-color="#2E333B"/>
+    </linearGradient>
+    <linearGradient id="cablePlug" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B7BFC9"/>
+      <stop offset="100%" stop-color="#8F97A5"/>
+    </linearGradient>
+    <radialGradient id="cableGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C5EA6B" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#C5EA6B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="120" cy="126" rx="86" ry="8" fill="#0B0E14" opacity="0.16"/>
+
+  <!-- power arc between the two live endpoints -->
+  <g opacity="0.85">
+    <ellipse cx="120" cy="66" rx="52" ry="14" fill="url(#cableGlow)"/>
+  </g>
+
+  <!-- cable body: heavy cord laid across the regolith -->
+  <path d="M36 62 Q60 24 96 22 Q128 20 152 44 Q172 64 196 72"
+        fill="none" stroke="url(#cableSheath)" stroke-width="13" stroke-linecap="round"/>
+  <path d="M36 62 Q60 24 96 22 Q128 20 152 44 Q172 64 196 72"
+        fill="none" stroke="#5A616C" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- inner conductor glimpse (copper) -->
+  <path d="M36 62 Q60 24 96 22 Q128 20 152 44 Q172 64 196 72"
+        fill="none" stroke="#E0A24E" stroke-width="4.5" stroke-linecap="round"
+        stroke-dasharray="10 22" opacity="0.85"/>
+
+  <!-- solar-side connector -->
+  <g>
+    <rect x="20" y="46" width="28" height="28" rx="7" transform="rotate(24 34 60)"
+          fill="url(#cablePlug)" stroke="#6E7988" stroke-width="2.5"/>
+    <g transform="rotate(24 34 60)" fill="#39414F">
+      <circle cx="28" cy="56" r="2.4"/><circle cx="40" cy="56" r="2.4"/>
+      <circle cx="28" cy="64" r="2.4"/><circle cx="40" cy="64" r="2.4"/>
+    </g>
+    <g transform="rotate(24 34 60)" fill="#C5EA6B" opacity="0.9">
+      <circle cx="34" cy="60" r="3"/>
+    </g>
+  </g>
+
+  <!-- hull-side connector -->
+  <g>
+    <rect x="188" y="58" width="26" height="26" rx="7" transform="rotate(32 201 72)"
+          fill="url(#cablePlug)" stroke="#6E7988" stroke-width="2.5"/>
+    <g transform="rotate(32 201 72)" fill="#39414F">
+      <circle cx="196" cy="68" r="2.2"/><circle cx="207" cy="68" r="2.2"/>
+      <circle cx="196" cy="75" r="2.2"/><circle cx="207" cy="75" r="2.2"/>
+    </g>
+    <g transform="rotate(32 201 72)" fill="#C5EA6B" opacity="0.9">
+      <circle cx="201" cy="71" r="2.6"/>
+    </g>
+  </g>
+
+  <!-- clamps through the tape point -->
+  <g fill="#6E7988" stroke="#39414F" stroke-width="1.8">
+    <path d="M60 30 L84 26 L86 32 L62 36 Z"/>
+    <path d="M156 44 L176 56 L173 62 L153 50 Z"/>
+  </g>
+</svg>

@@ -11,6 +11,7 @@ export const IMAGE_ASSETS = [
   { key: 'astronaut-south', file: 'characters/astronaut-south.svg', width: 40, height: 48 },
   { key: 'astronaut-north', file: 'characters/astronaut-north.svg', width: 40, height: 48 },
   { key: 'astronaut-east', file: 'characters/astronaut-east.svg', width: 40, height: 48 },
+  { key: 'astronaut-seated', file: 'characters/astronaut-seated.svg', width: 150, height: 150 },
 
   // environment
   { key: 'ground-tile', file: 'environment/ground-tile.svg', width: 256, height: 256 },
@@ -20,20 +21,35 @@ export const IMAGE_ASSETS = [
   { key: 'pebble', file: 'environment/pebble.svg', width: 24, height: 24 },
   { key: 'flag', file: 'environment/flag.svg', width: 40, height: 64 },
   { key: 'earth', file: 'environment/earth.svg', width: 180, height: 180 },
+  { key: 'star', file: 'environment/star.svg', width: 10, height: 10 },
+  { key: 'space-view', file: 'environment/space-view.svg', width: 1000, height: 800 },
   { key: 'menu-ridge', file: 'environment/menu-ridge.svg', width: 1280, height: 300 },
 
   // buildings
   { key: 'lander', file: 'buildings/lander.svg', width: 200, height: 200 },
   { key: 'solar-panel', file: 'buildings/solar-panel.svg', width: 120, height: 90 },
+  { key: 'spaceship', file: 'buildings/spaceship.svg', width: 220, height: 220 },
+  { key: 'cabin', file: 'buildings/cabin.svg', width: 1280, height: 720 },
 
   // equipment
   { key: 'crate', file: 'equipment/crate.svg', width: 64, height: 64 },
   { key: 'crate-open', file: 'equipment/crate-open.svg', width: 64, height: 64 },
   { key: 'radio-dish', file: 'equipment/radio-dish.svg', width: 96, height: 96 },
   { key: 'radio-dish-fixed', file: 'equipment/radio-dish-fixed.svg', width: 96, height: 96 },
+  { key: 'antenna-upright', file: 'equipment/antenna-upright.svg', width: 96, height: 96 },
+  { key: 'engine', file: 'equipment/engine.svg', width: 150, height: 120 },
+  { key: 'cable', file: 'equipment/cable.svg', width: 240, height: 150 },
+  { key: 'console', file: 'equipment/console.svg', width: 84, height: 72 },
+
+  // rover
+  { key: 'rover-derelict', file: 'rover/rover-derelict.svg', width: 156, height: 108 },
+  { key: 'rover-powered', file: 'rover/rover-powered.svg', width: 156, height: 108 },
 
   // effects
   { key: 'dust-puff', file: 'effects/dust-puff.svg', width: 32, height: 32 },
+  { key: 'crack', file: 'effects/crack.svg', width: 220, height: 220 },
+  { key: 'tape-patch', file: 'effects/tape-patch.svg', width: 140, height: 110 },
+  { key: 'light-glow', file: 'effects/light-glow.svg', width: 180, height: 180 },
 
   // ui icons (white, tinted at runtime)
   { key: 'icon-o2', file: 'ui/icon-o2.svg', width: 32, height: 32 },
@@ -44,7 +60,10 @@ export const IMAGE_ASSETS = [
   { key: 'icon-objective', file: 'ui/icon-objective.svg', width: 32, height: 32 },
   { key: 'icon-chip', file: 'ui/icon-chip.svg', width: 32, height: 32 },
   { key: 'icon-check', file: 'ui/icon-check.svg', width: 32, height: 32 },
-  { key: 'icon-warning', file: 'ui/icon-warning.svg', width: 32, height: 32 }
+  { key: 'icon-warning', file: 'ui/icon-warning.svg', width: 32, height: 32 },
+  { key: 'icon-engine', file: 'ui/icon-engine.svg', width: 32, height: 32 },
+  { key: 'icon-radio-off', file: 'ui/icon-radio-off.svg', width: 64, height: 64 },
+  { key: 'terminal-map', file: 'environment/terminal-map.svg', width: 520, height: 300 }
 ];
 
 export function loadImageAssets(loader) {

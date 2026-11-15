@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220">
+  <defs>
+    <linearGradient id="spHull" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0%" stop-color="#F7FAFC"/>
+      <stop offset="52%" stop-color="#E4EAF1"/>
+      <stop offset="100%" stop-color="#C9D2DC"/>
+    </linearGradient>
+    <linearGradient id="spGlass" x1="0.2" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#4E7090"/>
+      <stop offset="60%" stop-color="#2C445E"/>
+      <stop offset="100%" stop-color="#1C2C3E"/>
+    </linearGradient>
+    <linearGradient id="spWing" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2E4A70"/>
+      <stop offset="100%" stop-color="#1E3350"/>
+    </linearGradient>
+    <linearGradient id="spNozzle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8A93A1"/>
+      <stop offset="100%" stop-color="#5C6674"/>
+    </linearGradient>
+  </defs>
+
+  <!-- silhouette aura for readability against black space -->
+  <ellipse cx="110" cy="110" rx="96" ry="96" fill="#26435E" opacity="0.12"/>
+
+  <!-- solar wing (right) -->
+  <g>
+    <path d="M138 96 L196 66 L206 86 L146 112 Z" fill="url(#spWing)" stroke="#4E7090" stroke-width="2.5" stroke-linejoin="round"/>
+    <g stroke="#4E7090" stroke-width="2" opacity="0.85">
+      <path d="M150 92 L154 73"/>
+      <path d="M162 88 L166 69"/>
+      <path d="M174 84 L178 65"/>
+      <path d="M186 80 L190 61"/>
+    </g>
+    <path d="M138 96 L196 66" stroke="#8FC6E8" stroke-width="2" opacity="0.55"/>
+    <circle cx="206" cy="86" r="3.4" fill="#C9D2DC" stroke="#8A93A1" stroke-width="1.6"/>
+  </g>
+
+  <!-- docking ring (left) -->
+  <g transform="rotate(-16 54 128)">
+    <ellipse cx="54" cy="128" rx="12" ry="16" fill="none"
+             stroke="#C9D2DC" stroke-width="5" stroke-linejoin="round"/>
+    <ellipse cx="54" cy="128" rx="12" ry="16" fill="none" stroke="#5C6674" stroke-width="1.2"/>
+  </g>
+
+  <!-- main hull -->
+  <path d="M52 84 L100 40 L156 62 L176 112 L156 152 L92 160 L52 128 Z"
+        fill="url(#spHull)" stroke="#A9B4C2" stroke-width="4" stroke-linejoin="round"/>
+  <!-- nose cone crest -->
+  <path d="M100 40 L124 50 L112 66 L92 58 Z" fill="#F9F4EC" stroke="#B0BAC8" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- body plate seams -->
+  <path d="M64 110 L166 118" stroke="#B4BFCB" stroke-width="2.2"/>
+  <path d="M60 96 L70 148" stroke="#C4CCD7" stroke-width="1.6" opacity="0.9"/>
+  <path d="M138 62 L150 140" stroke="#C4CCD7" stroke-width="1.6" opacity="0.9"/>
+  <!-- small green telemetry panel -->
+  <rect x="118" y="120" width="26" height="12" rx="3" fill="#2A3648" stroke="#4E5C6E" stroke-width="2"/>
+  <rect x="122" y="124" width="18" height="4" rx="2" fill="#7FE3A0" opacity="0.9"/>
+
+  <!-- ============ porthole at (90,76) ============ -->
+  <g>
+    <circle cx="90" cy="76" r="24" fill="#C9D2DC" stroke="#98A3B1" stroke-width="2.5"/>
+    <circle cx="90" cy="76" r="18" fill="url(#spGlass)" stroke="#7F8896" stroke-width="2.2"/>
+    <path d="M78 70 A14 14 0 0 1 90 63" fill="none" stroke="#9ED2EE" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+    <circle cx="90" cy="76" r="18" fill="none" stroke="#DCE8F2" stroke-width="1" opacity="0.5"/>
+    <g fill="#8A93A1">
+      <circle cx="90" cy="51.5" r="2.6"/>
+      <circle cx="90" cy="100.5" r="2.6"/>
+      <circle cx="65.5" cy="76" r="2.6"/>
+      <circle cx="114.5" cy="76" r="2.6"/>
+    </g>
+  </g>
+
+  <!-- side antenna mast -->
+  <line x1="160" y1="152" x2="182" y2="186" stroke="#8A93A1" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="183" cy="188" r="3.6" fill="#5C6674" stroke="#4A525F" stroke-width="1.4"/>
+
+  <!-- landing struts -->
+  <g stroke="#A9B4C2" stroke-width="4" stroke-linecap="round">
+    <path d="M74 154 L62 178"/>
+    <path d="M104 158 L98 182"/>
+    <path d="M140 150 L152 174"/>
+  </g>
+  <g fill="#5C6674">
+    <circle cx="61" cy="179" r="3.2"/>
+    <circle cx="97" cy="183" r="3.2"/>
+    <circle cx="153" cy="175" r="3.2"/>
+  </g>
+
+  <!-- thruster pods -->
+  <g>
+    <path d="M70 158 L86 158 L92 186 L64 186 Z" fill="#596678" stroke="#454F5F" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M70 164 L86 164 L89 180 L67 180 Z" fill="url(#spNozzle)"/>
+    <path d="M126 156 L142 156 L150 188 L118 188 Z" fill="#596678" stroke="#454F5F" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M126 162 L142 162 L145 182 L123 182 Z" fill="url(#spNozzle)"/>
+  </g>
+</svg>

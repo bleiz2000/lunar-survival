@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="auFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EDEFF3"/>
+      <stop offset="55%" stop-color="#D6DCE4"/>
+      <stop offset="100%" stop-color="#BEC7D2"/>
+    </linearGradient>
+    <linearGradient id="auBack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A9B2BF"/>
+      <stop offset="100%" stop-color="#828B99"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="48" cy="90" rx="30" ry="5.5" fill="#0B0E14" opacity="0.18"/>
+
+  <!-- tripod legs -->
+  <g stroke="#7A8090" stroke-width="4" stroke-linecap="round">
+    <path d="M44 74 L24 89"/>
+    <path d="M52 74 L72 87"/>
+    <path d="M48 76 L48 91"/>
+  </g>
+
+  <!-- equipment box -->
+  <rect x="31" y="60" width="34" height="16" rx="4" fill="#59606E" stroke="#454B58" stroke-width="2.5"/>
+  <circle cx="38" cy="68" r="2.8" fill="#8A91A0"/>
+  <circle cx="46" cy="68" r="2.8" fill="#8A91A0"/>
+  <circle cx="54" cy="68" r="2.8" fill="#4E5562"/>
+  <rect x="58" y="65" width="4" height="6" rx="1.5" fill="#8A91A0"/>
+
+  <!-- mast -->
+  <rect x="46" y="38" width="4" height="24" rx="2" fill="#8A91A0"/>
+  <circle cx="48" cy="62" r="4" fill="#6E7683" stroke="#4E5562" stroke-width="1.5"/>
+
+  <!-- dish, tilted towards the sky -->
+  <g transform="rotate(-20 48 30)">
+    <ellipse cx="48" cy="33" rx="26" ry="12" fill="url(#auBack)"/>
+    <ellipse cx="48" cy="30" rx="26" ry="12.5" fill="url(#auFace)" stroke="#9FA9B7" stroke-width="2.2"/>
+    <ellipse cx="48" cy="30" rx="20" ry="9" fill="#D2DAE4" opacity="0.85"/>
+    <ellipse cx="48" cy="30" rx="20" ry="9" fill="none" stroke="#AEB8C6" stroke-width="1.4"/>
+    <path d="M48 17.5 L48 42.5" stroke="#AEB8C6" stroke-width="1.2" opacity="0.9"/>
+    <path d="M22 30 L74 30" stroke="#AEB8C6" stroke-width="1.2" opacity="0.55"/>
+    <path d="M24 25 A26 12.5 0 0 1 48 17.5" fill="none" stroke="#FFFFFF" stroke-width="1.8" opacity="0.8" stroke-linecap="round"/>
+    <!-- fine repair welds on the rim -->
+    <path d="M32 22 A22 10.5 0 0 1 44 19" fill="none" stroke="#B4BFCB" stroke-width="1.4" opacity="0.9"/>
+    <path d="M58 40 A20 10 0 0 0 70 34" fill="none" stroke="#B4BFCB" stroke-width="1.4" opacity="0.9"/>
+    <!-- feed horn -->
+    <line x1="48" y1="30" x2="48" y2="14" stroke="#9EA9B7" stroke-width="2"/>
+    <circle cx="48" cy="13" r="3.2" fill="#F09A4E" stroke="#C97B36" stroke-width="1.2"/>
+    <line x1="34" y1="24" x2="48" y2="14" stroke="#9EA9B7" stroke-width="1.4" opacity="0.8"/>
+    <line x1="62" y1="24" x2="48" y2="14" stroke="#9EA9B7" stroke-width="1.4" opacity="0.8"/>
+  </g>
+
+  <!-- cable ready, waiting for power -->
+  <path d="M60 58 Q68 62 66 70" fill="none" stroke="#8A91A0" stroke-width="2" stroke-linecap="round"/>
+  <!-- ground clamp -->
+  <rect x="36" y="82" width="22" height="7" rx="3.5" fill="#6E7683" stroke="#4E5562" stroke-width="1.5"/>
+</svg>

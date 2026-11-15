@@ -15,6 +15,8 @@ export const WORLD_SEED = 'lunar-survival-v1';
 export const LANDER_OFFSET = { x: -140, y: -140 }; // lander position relative to world center
 export const SPAWN_OFFSET = { x: 40, y: 70 };      // astronaut spawn relative to world center
 
+export const LANDER_ANGLE = -7;            // crash tilt (degrees), straightened after the engine repair
+
 export const CRATER_COUNT = 12;
 export const ROCK_COUNT = 46;
 export const PEBBLE_COUNT = 30;
@@ -27,23 +29,70 @@ export const BOULDER_SPACING = 120;
 
 // ── Outpost layout (offsets relative to the lander) ──────────
 export const OUTPOST_LAYOUT = {
-  radio: { x: 190, y: 42 },
+  // The dish was torn loose in the crash: it lies on the regolith until repaired.
+  antenna: { x: 168, y: 214 },
   crates: [
-    { x: 300, y: 196 },
-    { x: -58, y: 300 },
-    { x: 330, y: -118 }
+    { x: 306, y: 292 },
+    { x: -286, y: 268 },
+    { x: 318, y: -96 }
   ],
   solar: [
-    { x: -216, y: 34, rotation: -0.16 },
-    { x: -210, y: 152, rotation: 0.12 }
+    { x: -232, y: 26, rotation: -0.16 },
+    { x: -226, y: 148, rotation: 0.12 }
   ],
-  flag: { x: 64, y: 330 }
+  flag: { x: 232, y: 132 },
+  // Attached to the hull, rotated together with the lander.
+  engine: { x: -100, y: 30 },
+  // Small service panel on the ground at the engine's feet.
+  console: { x: -100, y: 118 },
+  window: { x: 0, y: -30 },
+  // Field cable junction at the foot of the LOWER solar panel.
+  arrayConnector: { x: -184, y: 196 }
 };
 
 // ── Interaction ──────────────────────────────────────────────
 export const INTERACT_KEY = 'E';
-export const CRATE_RADIUS = 76;
-export const RADIO_RADIUS = 98;
+export const ANTENNA_RADIUS = 104;
+export const SOLAR_RADIUS = 92;
+export const WINDOW_RADIUS = 118; // measured against the hull wall: ~107px from the glass at the stop line
+export const ENGINE_RADIUS = 88;
+export const CONSOLE_RADIUS = 84;
+export const ROVER_RADIUS = 104;
+
+// ── Survey rover (first P1 field objective after the prologue) ─
+// North-east of the lander, on the bearing Earth logged towards the
+// abandoned testing base.
+export const ROVER_OFFSET = { x: 520, y: -260 };
+
+// ── Actions (E → progress bar → result) ──────────────────────
+export const ACTION_DURATION = {
+  antenna: 1700,
+  power: 1500,
+  window: 1400,
+  engine: 1800,
+  'engine-diagnostics': 1600,
+  'console-terminal': 1200,
+  'rover-power': 1800
+};
+
+// ── Typewriter speeds (ms per character) ─────────────────────
+export const TYPE_SPEED = {
+  PANIC: 11,      // shouting, emergencies
+  EXCITED: 17,    // animated radio chatter
+  REPORT: 30,     // calm, factual report
+  CALM: 48,       // quiet reflection
+  TIRED: 54       // resigned, slow
+};
+
+// ── Cinematic timings ────────────────────────────────────────
+export const INTRO = {
+  SPACE_HOLD: 3000,      // ms of silence in orbit before the camera pushes in
+  FADE_MS: 520,          // space → cabin fade to black
+  TIMER_START: 3 * 60 * 60, // 03:00:00
+  TIMER_FAST_MS: 2600,
+  CRASH_MS: 2200,
+  SIGNAL_HOLD: 2800
+};
 
 // ── Viewport ─────────────────────────────────────────────────
 export const GAME_WIDTH = 1280;
@@ -54,6 +103,7 @@ export const GAME_BACKGROUND = '#0b0e14';
 export const SCENE_BOOT = 'Boot';
 export const SCENE_PRELOAD = 'Preload';
 export const SCENE_MAIN_MENU = 'MainMenu';
+export const SCENE_INTRO = 'Intro';
 export const SCENE_GAME = 'Game';
 export const SCENE_UI = 'UI';
 
@@ -76,6 +126,8 @@ export const UI = {
   successHex: 0x8fe3c0,
   danger: '#f27a6a',
   dangerHex: 0xf27a6a,
+  earth: '#7fd7e8',
+  earthHex: 0x7fd7e8,
   o2: '#7fd7e8',
   o2Hex: 0x7fd7e8,
   food: '#f4b860',
@@ -91,4 +143,3 @@ export const UI = {
 export const START_DAY = 1;
 export const RESCUE_DAY = 25;
 export const START_SURVIVAL = { oxygen: 86, food: 74, water: 68, power: 92 };
-export const RADIO_REPAIR_COST = { itemId: 'chip', qty: 3 };

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="120" viewBox="0 0 150 120">
+  <defs>
+    <linearGradient id="engBody" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#D9DEE6"/>
+      <stop offset="50%" stop-color="#BFC8D4"/>
+      <stop offset="100%" stop-color="#9FAAB9"/>
+    </linearGradient>
+    <linearGradient id="engNozzle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#76808E"/>
+      <stop offset="100%" stop-color="#525B68"/>
+    </linearGradient>
+    <radialGradient id="engLampSocket" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#141B26"/>
+      <stop offset="70%" stop-color="#202B3A"/>
+      <stop offset="100%" stop-color="#2C3849"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ground dust -->
+  <ellipse cx="75" cy="108" rx="56" ry="7" fill="#0B0E14" opacity="0.20"/>
+
+  <!-- engine bell / exhaust nozzle -->
+  <path d="M56 66 L94 66 L104 106 L46 106 Z" fill="url(#engNozzle)" stroke="#3C4450" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M63 72 L87 72 L94 100 L56 100 Z" fill="#3A4352"/>
+  <g stroke="#8A93A1" stroke-width="2.4" stroke-linecap="round" opacity="0.9">
+    <path d="M56 78 L94 78"/>
+    <path d="M54 88 L96 88"/>
+  </g>
+
+  <!-- intake heads -->
+  <g>
+    <rect x="22" y="34" width="26" height="34" rx="6" fill="url(#engBody)" stroke="#8A93A1" stroke-width="2.5"/>
+    <rect x="102" y="34" width="26" height="34" rx="6" fill="url(#engBody)" stroke="#8A93A1" stroke-width="2.5"/>
+    <g stroke="#8A93A1" stroke-width="1.8">
+      <path d="M30 44 L40 44"/><path d="M30 52 L38 52"/><path d="M30 60 L40 60"/>
+      <path d="M110 44 L120 44"/><path d="M110 52 L118 52"/><path d="M110 60 L120 60"/>
+    </g>
+  </g>
+
+  <!-- core body -->
+  <path d="M50 26 L100 26 L112 50 L94 70 L56 70 L38 50 Z"
+        fill="url(#engBody)" stroke="#8A93A1" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M56 34 L94 34" stroke="#8A93A1" stroke-width="2.2" opacity="0.9"/>
+  <path d="M58 42 L92 42" stroke="#E7EBF0" stroke-width="1.6" opacity="0.8"/>
+  <path d="M60 50 L90 50" stroke="#C9D2DC" stroke-width="1.8" opacity="0.8"/>
+  <path d="M62 58 L88 58" stroke="#8A93A1" stroke-width="1.8" opacity="0.8"/>
+  <!-- rivet bolts -->
+  <g fill="#6E7988">
+    <circle cx="52" cy="31" r="2.6"/><circle cx="98" cy="31" r="2.6"/>
+    <circle cx="46" cy="50" r="2.6"/><circle cx="104" cy="50" r="2.6"/>
+    <circle cx="58" cy="66" r="2.6"/><circle cx="92" cy="66" r="2.6"/>
+  </g>
+
+  <!-- ============ status lamp socket at (75,20) ============ -->
+  <circle cx="75" cy="20" r="10" fill="url(#engLampSocket)" stroke="#39434F" stroke-width="2.5"/>
+  <circle cx="75" cy="20" r="6.5" fill="#101822"/>
+  <g fill="#39434F">
+    <circle cx="75" cy="6.5" r="2"/>
+    <circle cx="66.5" cy="14" r="2"/>
+    <circle cx="83.5" cy="14" r="2"/>
+  </g>
+</svg>

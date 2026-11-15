@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+  <defs>
+    <linearGradient id="suit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B7C2CE"/>
+      <stop offset="65%" stop-color="#98A7B6"/>
+      <stop offset="100%" stop-color="#7B8C9D"/>
+    </linearGradient>
+    <linearGradient id="visor" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#3E5570"/>
+      <stop offset="100%" stop-color="#1B2734"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="76" cy="140" rx="42" ry="7" fill="#04070D" opacity="0.30"/>
+
+  <!-- backpack behind the shoulders -->
+  <rect x="34" y="52" width="30" height="46" rx="12" fill="#B9C3D0" stroke="#8F9AA8" stroke-width="3"/>
+  <rect x="41" y="62" width="16" height="8" rx="4" fill="#8F9AA8"/>
+
+  <!-- thighs -->
+  <path d="M62 96 Q60 112 72 116 L112 116 Q122 112 120 100 L118 92 Z"
+        fill="url(#suit)" stroke="#AEB8C6" stroke-width="3.5" stroke-linejoin="round"/>
+  <!-- shins -->
+  <path d="M104 112 Q112 126 110 134 L96 134 Q92 124 92 112 Z"
+        fill="url(#suit)" stroke="#AEB8C6" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M74 112 Q70 126 72 134 L86 134 Q88 124 88 112 Z"
+        fill="url(#suit)" stroke="#AEB8C6" stroke-width="3.5" stroke-linejoin="round"/>
+
+  <!-- boots -->
+  <g fill="#3A4553" stroke="#2A3341" stroke-width="2.5">
+    <path d="M70 132 H90 Q94 140 88 143 H68 Q64 138 70 132 Z"/>
+    <path d="M94 132 H112 Q118 140 112 143 H92 Q88 138 94 132 Z"/>
+  </g>
+
+  <!-- torso -->
+  <path d="M56 56 Q74 48 92 56 L98 86 Q96 100 84 102 L64 102 Q52 100 52 86 Z"
+        fill="url(#suit)" stroke="#B4BECB" stroke-width="3.5" stroke-linejoin="round"/>
+
+  <!-- chest control box -->
+  <rect x="64" y="66" width="24" height="18" rx="5" fill="#C9D2DE" stroke="#9AA5B3" stroke-width="2.5"/>
+  <circle cx="70" cy="73" r="2.4" fill="#E4853C"/>
+  <circle cx="78" cy="73" r="2.4" fill="#7FD7E8"/>
+  <rect x="66" y="78" width="20" height="2.6" rx="1.3" fill="#9AA5B3"/>
+
+  <!-- arms resting on the thighs -->
+  <path d="M56 62 Q46 78 52 94 Q58 100 66 96" fill="url(#suit)" stroke="#B4BECB" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M92 62 Q102 78 98 94 Q92 100 86 96" fill="url(#suit)" stroke="#B4BECB" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="60" cy="97" r="7" fill="#DDE5EE" stroke="#A9B4C2" stroke-width="2.5"/>
+  <circle cx="90" cy="97" r="7" fill="#DDE5EE" stroke="#A9B4C2" stroke-width="2.5"/>
+
+  <!-- neck ring -->
+  <rect x="62" y="46" width="24" height="10" rx="5" fill="#C9D2DE" stroke="#9AA5B3" stroke-width="2.5"/>
+
+  <!-- helmet -->
+  <circle cx="74" cy="30" r="24" fill="url(#suit)" stroke="#B4BECB" stroke-width="3.5"/>
+  <path d="M56 26 Q74 16 92 26 Q92 44 74 48 Q56 44 56 26 Z" fill="url(#visor)" stroke="#8FA3B8" stroke-width="2.5"/>
+  <path d="M62 24 Q70 19 80 22" fill="none" stroke="#8FC6E8" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+  <circle cx="94" cy="20" r="4" fill="#C9D2DE" stroke="#9AA5B3" stroke-width="2"/>
+</svg>

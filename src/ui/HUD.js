@@ -29,7 +29,6 @@ export class HUD {
     this.scene = scene;
     this.state = state;
     this.toasts = [];
-    this.promptContainer = null;
 
     this.buildDayPanel();
     this.buildObjectivePanel(objective);
@@ -38,10 +37,13 @@ export class HUD {
     this.bindEvents();
   }
 
+  /** Hard-edge look so panels read as panels, not as loose glass. */
+  static PANEL_STYLE = { accent: UI.accentHex, borderAlpha: 1 };
+
   // ── day ────────────────────────────────────────────────────
   buildDayPanel() {
     const scene = this.scene;
-    const panel = panelAt(scene, 24, 20, 152, 46);
+    const panel = panelAt(scene, 24, 20, 152, 46, HUD.PANEL_STYLE);
 
     const icon = scene.add.image(-50, -1, 'icon-day').setDisplaySize(17, 17).setTint(UI.accentHex);
 
@@ -64,38 +66,41 @@ export class HUD {
   // ── objective ──────────────────────────────────────────────
   buildObjectivePanel(objective) {
     const scene = this.scene;
-    this.objectivePanel = panelAt(scene, 24, 78, 348, 106, { accent: UI.accentHex });
+    this.objectivePanel = panelAt(scene, 24, 78, 316, 106, HUD.PANEL_STYLE);
 
-    this.objectiveIcon = scene.add.image(-156, -29, 'icon-objective')
+    this.objectiveIcon = scene.add.image(-142, -29, 'icon-objective')
       .setDisplaySize(14, 14)
       .setTint(UI.accentHex);
 
-    this.objectiveHeader = scene.add.text(-136, -36, 'OBJECTIVE', {
+    this.objectiveHeader = scene.add.text(-124, -36, 'OBJECTIVE', {
       fontFamily: UI.mono,
-      fontSize: '9px',
+      fontSize: '8px',
       color: UI.muted,
       letterSpacing: 2
     });
 
-    this.objectiveTitle = scene.add.text(-156, -15, '', {
+    this.objectiveTitle = scene.add.text(-142, -15, '', {
       fontFamily: UI.font,
-      fontSize: '14px',
+      fontSize: '13px',
       color: UI.textBright,
-      wordWrap: { width: 316 }
+      wordWrap: { width: 284 }
     });
+    // Wrapped within the panel: never spills past its bounds.
+    this.objectiveTitle.setMaxLines(2);
 
-    this.objectiveDetail = scene.add.text(-156, 13, '', {
+    this.objectiveDetail = scene.add.text(-142, 13, '', {
       fontFamily: UI.font,
-      fontSize: '10px',
+      fontSize: '9.5px',
       color: UI.muted,
-      wordWrap: { width: 316 }
+      wordWrap: { width: 284 }
     });
+    this.objectiveDetail.setMaxLines(2);
 
-    this.progressTrack = scene.add.rectangle(-156, 40, 280, 3, 0x22304a).setOrigin(0, 0.5);
-    this.progressFill = scene.add.rectangle(-156, 40, 280, 3, UI.accentHex).setOrigin(0, 0.5).setScale(0, 1);
-    this.progressLabel = scene.add.text(144, 40, '', {
+    this.progressTrack = scene.add.rectangle(-142, 40, 244, 3, 0x22304a).setOrigin(0, 0.5);
+    this.progressFill = scene.add.rectangle(-142, 40, 244, 3, UI.accentHex).setOrigin(0, 0.5).setScale(0, 1);
+    this.progressLabel = scene.add.text(112, 40, '', {
       fontFamily: UI.mono,
-      fontSize: '10px',
+      fontSize: '9px',
       color: UI.muted
     }).setOrigin(1, 0.5);
 
@@ -154,11 +159,11 @@ export class HUD {
   // ── life support ───────────────────────────────────────────
   buildResourcePanel() {
     const scene = this.scene;
-    const panel = panelAt(scene, 1008, 20, 248, 168);
+    const panel = panelAt(scene, 1018, 20, 238, 168, HUD.PANEL_STYLE);
 
-    panel.add(scene.add.text(-104, -72, 'LIFE SUPPORT', {
+    panel.add(scene.add.text(-98, -72, 'LIFE SUPPORT', {
       fontFamily: UI.mono,
-      fontSize: '9px',
+      fontSize: '8px',
       color: UI.muted,
       letterSpacing: 2
     }));
@@ -167,25 +172,26 @@ export class HUD {
       const y = -46 + index * 32;
       const value = this.state.survival[resource.key] ?? 0;
 
-      panel.add(scene.add.image(-96, y - 8, resource.icon)
-        .setDisplaySize(15, 15)
+      panel.add(scene.add.image(-98, y - 8, resource.icon)
+        .setDisplaySize(14, 14)
         .setTint(resource.color));
 
-      panel.add(scene.add.text(-78, y - 13, resource.label, {
+      panel.add(scene.add.text(-80, y - 12, resource.label, {
         fontFamily: UI.mono,
-        fontSize: '9px',
+        fontSize: '8px',
         color: UI.muted,
-        letterSpacing: 1.4
+        letterSpacing: 1.2
       }));
 
-      panel.add(scene.add.text(104, y - 8, `${Math.round(value)}%`, {
+      panel.add(scene.add.text(98, y - 7, `${Math.round(value)}%`, {
         fontFamily: UI.mono,
-        fontSize: '10px',
-        color: resource.textColor
+        fontSize: '9px',
+        color: resource.textColor,
+        letterSpacing: 0.5
       }).setOrigin(1, 0.5));
 
-      panel.add(scene.add.rectangle(-104, y + 6, 208, 3, 0x22304a).setOrigin(0, 0.5));
-      panel.add(scene.add.rectangle(-104, y + 6, 208, 3, resource.color)
+      panel.add(scene.add.rectangle(-98, y + 6, 196, 3, 0x22304a).setOrigin(0, 0.5));
+      panel.add(scene.add.rectangle(-98, y + 6, 196, 3, resource.color)
         .setOrigin(0, 0.5)
         .setScale(value / 100, 1)
         .setAlpha(0.9));
@@ -203,85 +209,9 @@ export class HUD {
     }).setOrigin(0, 0.5);
   }
 
-  // ── interaction prompt ─────────────────────────────────────
-  showPrompt({ key, label, prompt }) {
-    this.destroyPrompt();
-
-    const scene = this.scene;
-    const container = scene.add.container(GAME_WIDTH / 2, 612).setDepth(700);
-
-    const promptText = scene.add.text(0, 0, prompt, {
-      fontFamily: UI.font,
-      fontSize: '13px',
-      color: UI.textBright
-    }).setOrigin(0, 0.5);
-
-    const width = Math.max(260, promptText.width + 100);
-    const panel = new Panel(scene, 0, 0, width, 58, {
-      fill: UI.panelDeep,
-      alpha: 0.95,
-      radius: 9
-    });
-
-    const badge = scene.add.graphics();
-    const badgeX = -width / 2 + 16;
-    badge.fillStyle(0x1e2a3d, 1);
-    badge.lineStyle(1, UI.accentHex, 0.9);
-    badge.fillRoundedRect(badgeX, -5, 26, 26, 6);
-    badge.strokeRoundedRect(badgeX, -5, 26, 26, 6);
-
-    const keyText = scene.add.text(badgeX + 13, 8, key, {
-      fontFamily: UI.mono,
-      fontSize: '12px',
-      color: UI.accent,
-      fontStyle: 'bold'
-    }).setOrigin(0.5);
-
-    const labelText = scene.add.text(badgeX + 38, -13, label.toUpperCase(), {
-      fontFamily: UI.mono,
-      fontSize: '9px',
-      color: UI.accent,
-      letterSpacing: 1.8
-    });
-
-    promptText.setPosition(badgeX + 38, 10);
-
-    container.add([panel, badge, keyText, labelText, promptText]);
-    container.setAlpha(0);
-    container.y += 6;
-
-    scene.tweens.add({
-      targets: container,
-      alpha: 1,
-      y: 612,
-      duration: 150,
-      ease: 'Quad.easeOut'
-    });
-
-    this.promptContainer = container;
-  }
-
-  destroyPrompt() {
-    if (!this.promptContainer) return;
-
-    this.scene.tweens.killTweensOf(this.promptContainer);
-    this.promptContainer.destroy();
-    this.promptContainer = null;
-  }
-
-  hidePrompt() {
-    if (!this.promptContainer) return;
-
-    const container = this.promptContainer;
-    this.promptContainer = null;
-
-    this.scene.tweens.add({
-      targets: container,
-      alpha: 0,
-      duration: 110,
-      onComplete: () => container.destroy()
-    });
-  }
+  // ── interaction prompt ────────────────────────────────────
+  // The [E] tag moved into the world (see ui/WorldPrompt.js): it floats
+  // above the object itself, not in this fixed HUD.
 
   // ── toasts ─────────────────────────────────────────────────
   showToast({ text, tone = 'info', icon = null }) {
@@ -356,8 +286,6 @@ export class HUD {
   bindEvents() {
     this.handlers = [
       [EVENTS.OBJECTIVE_CHANGED, (objective) => this.updateObjective(objective)],
-      [EVENTS.PROMPT_SHOW, (payload) => this.showPrompt(payload)],
-      [EVENTS.PROMPT_HIDE, () => this.hidePrompt()],
       [EVENTS.TOAST, (payload) => this.showToast(payload)]
     ];
 
@@ -368,6 +296,5 @@ export class HUD {
     for (const [event, handler] of this.handlers) bus.off(event, handler);
     this.toasts.forEach((toast) => toast.destroy());
     this.toasts = [];
-    this.destroyPrompt();
   }
 }

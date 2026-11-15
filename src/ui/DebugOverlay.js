@@ -29,6 +29,13 @@ export class DebugOverlay {
     this.text.setVisible(this.enabled);
   }
 
+  /** Satisfies the shutdown contract of the other UI panels. */
+  destroy() {
+    this.enabled = false;
+    this.text?.destroy();
+    this.text = null;
+  }
+
   update() {
     if (Phaser.Input.Keyboard.JustDown(this.key)) this.toggle();
     if (!this.enabled) return;

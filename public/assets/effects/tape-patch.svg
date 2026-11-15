@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="110" viewBox="0 0 140 110">
+  <defs>
+    <linearGradient id="tapeBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E9EEF4"/>
+      <stop offset="30%" stop-color="#CBD5E0"/>
+      <stop offset="70%" stop-color="#AFBCCB"/>
+      <stop offset="100%" stop-color="#9AA9BB"/>
+    </linearGradient>
+    <linearGradient id="tapeEdge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#41505F" stop-opacity="0.0"/>
+      <stop offset="100%" stop-color="#2C3A4A" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ground shadow -->
+  <ellipse cx="70" cy="97" rx="52" ry="7" fill="#0B0E14" opacity="0.22"/>
+
+  <g transform="rotate(-9 70 52)">
+    <!-- torn lead edge along the bottom -->
+    <path d="M14 74 L126 74 L126 70 Q120 66 116 70 Q108 76 100 70 Q92 64 84 70 Q76 76 68 70 Q60 64 52 70 Q44 76 36 70 Q28 66 22 70 Q18 72 14 70 Z"
+          fill="#8FA0B2"/>
+    <!-- main tape body -->
+    <rect x="14" y="26" width="112" height="48" rx="2" fill="url(#tapeBody)"
+          stroke="#5E6F80" stroke-width="2"/>
+    <!-- scuffed texture streaks -->
+    <g stroke="#7E8FA1" stroke-width="1.1" opacity="0.55">
+      <path d="M20 34 L44 34"/>
+      <path d="M52 30 L84 30"/>
+      <path d="M92 34 L118 34"/>
+      <path d="M24 42 L40 42"/>
+      <path d="M96 42 L118 42"/>
+      <path d="M20 52 L34 52"/>
+      <path d="M46 48 L70 48"/>
+      <path d="M78 52 L110 52"/>
+      <path d="M24 62 L58 62"/>
+      <path d="M68 58 L92 58"/>
+      <path d="M100 62 L116 62"/>
+    </g>
+    <!-- long dimple from pressure/stretch -->
+    <path d="M60 26 Q70 52 80 74" fill="none" stroke="#7E8FA1" stroke-width="1.8" opacity="0.5"/>
+    <!-- highlight along the top -->
+    <path d="M18 30 L122 30" stroke="#F2F6FA" stroke-width="2" opacity="0.75"/>
+    <!-- skewed shadow ramp at the bottom of the tape -->
+    <rect x="14" y="56" width="112" height="18" rx="2" fill="url(#tapeEdge)"/>
+    <!-- seam fold flares -->
+    <path d="M14 26 Q10 50 14 74" fill="none" stroke="#F2F6FA" stroke-width="2" opacity="0.6"/>
+    <path d="M126 26 Q130 50 126 74" fill="none" stroke="#F2F6FA" stroke-width="2" opacity="0.35"/>
+  </g>
+</svg>

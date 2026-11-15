@@ -1,72 +1,101 @@
-import { RADIO_REPAIR_COST, RESCUE_DAY } from '../game/constants.js';
 import { EVENTS } from '../game/events.js';
 
+const STEPS = {
+  'repair-antenna': {
+    title: 'Repair the antenna',
+    detail: 'The crash tore the dish loose — attach the cables.'
+  },
+  'restore-power': {
+    title: 'Restore power',
+    detail: 'Connect the lander to the solar array.'
+  },
+  'first-comms': {
+    title: 'Establish contact with Earth',
+    detail: 'Use the antenna to call Houston.'
+  },
+  'patch-leak': {
+    title: 'Patch the oxygen leak',
+    detail: 'Seal the crack in the porthole glass.'
+  },
+  'engine-diagnostics': {
+    title: 'Run engine diagnostics',
+    detail: 'Scan the engine bay right at the ship.'
+  },
+  'repair-engine': {
+    title: 'Repair the engine',
+    detail: 'Stabilise the engine at half capacity.'
+  },
+  'second-comms': {
+    title: 'Call Houston again',
+    detail: 'Try the antenna again — anyone out there?'
+  },
+  'check-computer': {
+    title: 'Check ship computer for coordinates',
+    detail: 'Read the packet on the service panel.'
+  },
+  'find-rover': {
+    title: 'Find the survey rover',
+    detail: 'A silent survey unit sits on the north-east route. Locate it and check its condition.'
+  },
+  'repair-rover': {
+    title: 'Restore rover power',
+    detail: 'The chassis and wheels survived. Jump-start the flat battery.'
+  },
+  'rover-ready': {
+    title: 'Survey rover online',
+    detail: 'Basic power restored. The hull computer can talk to it again.',
+    completed: true
+  }
+};
+
 /**
- * Owns the first gameplay sequence: find components → repair the array →
- * receive Earth's transmission → survive until rescue. Emits plain objective
- * payloads; the HUD only renders them.
+ * Rule engine for Day 1: the prologue chain plus the first P1 field
+ * objective (the abandoned survey rover). The current step is derived from
+ * the state flags, so an out-of-order trigger can never desync the quest.
+ * Pure data in, objective payloads out — no UI imports.
  */
 export class QuestSystem {
-  constructor(state, inventory, bus) {
+  constructor(state, bus) {
     this.state = state;
-    this.inventory = inventory;
     this.bus = bus;
-
-    this.onInventoryChanged = () => this.sync();
-    this.onTransmissionClosed = () => this.advanceAfterTransmission();
-
-    bus.on(EVENTS.INVENTORY_CHANGED, this.onInventoryChanged);
-    bus.on(EVENTS.TRANSMISSION_CLOSED, this.onTransmissionClosed);
-  }
-
-  get required() {
-    return RADIO_REPAIR_COST.qty;
   }
 
   start() {
     this.emitObjective();
   }
 
+  /** Single source of truth: flag chain, never manual step bumps. */
+  stepFromFlags() {
+    const f = this.state.flags;
+
+    if (!f.isAntennaFixed) return 'repair-antenna';
+    if (!f.isPowerOn) return 'restore-power';
+    if (!f.isComms1Done) return 'first-comms';
+    if (!f.isWindowTaped) return 'patch-leak';
+    if (!f.engineDiagnosed) return 'engine-diagnostics';
+    if (!f.isEngineFixed) return 'repair-engine';
+    if (!f.isComms2Done) return 'second-comms';
+    if (!f.isCoordinatesReceived) return 'check-computer';
+    if (!f.isRoverFound) return 'find-rover';
+    if (!f.isRoverPowered) return 'repair-rover';
+
+    return 'rover-ready';
+  }
+
+  get step() {
+    return this.stepFromFlags();
+  }
+
   getObjective() {
-    const quest = this.state.quest;
-    const chips = this.inventory.count(RADIO_REPAIR_COST.itemId);
-
-    if (quest.radioRepaired) {
-      if (quest.step === 'restored') {
-        return {
-          step: 'restored',
-          title: 'Communications restored',
-          detail: 'Incoming transmission from Earth…',
-          progress: null,
-          completed: true
-        };
-      }
-
-      return {
-        step: 'survive',
-        title: 'Survive until the rescue window',
-        detail: `Hold the outpost together until Day ${RESCUE_DAY}.`,
-        progress: null,
-        completed: false
-      };
-    }
-
-    if (quest.step === 'repair-radio') {
-      return {
-        step: 'repair-radio',
-        title: 'Repair the communications array',
-        detail: 'Install the components in the damaged dish.',
-        progress: { current: this.required, total: this.required },
-        completed: false
-      };
-    }
+    const step = this.step;
+    const spec = STEPS[step] ?? STEPS['rover-ready'];
 
     return {
-      step: 'collect-chips',
-      title: 'Recover electronic components',
-      detail: 'Search the supply containers around the lander.',
-      progress: { current: chips, total: this.required },
-      completed: false
+      step,
+      title: spec.title,
+      detail: spec.detail,
+      progress: null,
+      completed: !!spec.completed
     };
   }
 
@@ -74,54 +103,105 @@ export class QuestSystem {
     this.bus.emit(EVENTS.OBJECTIVE_CHANGED, this.getObjective());
   }
 
-  /** Keeps the objective in sync with the contents of the inventory. */
-  sync() {
-    if (this.state.quest.radioRepaired) return;
+  /** World actions with progress bars (antenna/power/window/engine/rover). */
+  applyAction(actionId) {
+    const map = {
+      antenna: 'isAntennaFixed',
+      power: 'isPowerOn',
+      window: 'isWindowTaped',
+      engine: 'isEngineFixed',
+      'rover-power': 'isRoverPowered'
+    };
 
-    const chips = this.inventory.count(RADIO_REPAIR_COST.itemId);
-    const step = chips >= this.required ? 'repair-radio' : 'collect-chips';
-    const changed = step !== this.state.quest.step;
+    const flag = map[actionId];
+    if (!flag || this.state.flags[flag]) return false;
 
-    this.state.quest.step = step;
-    this.emitObjective();
-
-    if (changed && step === 'repair-radio') {
-      this.bus.emit(EVENTS.TOAST, {
-        text: 'Components complete — return to the array',
-        tone: 'success'
-      });
-    }
-  }
-
-  /**
-   * Marks the array as repaired *before* the cost is paid, so the inventory
-   * change event cannot rewind the objective back to "collect chips".
-   */
-  repairRadio(applyCost) {
-    if (this.state.quest.radioRepaired) return false;
-
-    this.state.quest.radioRepaired = true;
-    this.state.quest.step = 'restored';
-
-    applyCost?.();
+    this.state.flags[flag] = true;
     this.emitObjective();
     return true;
   }
 
-  advanceAfterTransmission() {
-    if (this.state.quest.step !== 'restored') return;
+  applyDiagnosed() {
+    if (this.state.flags.engineDiagnosed) return false;
 
-    this.state.quest.step = 'survive';
+    this.state.flags.engineDiagnosed = true;
+    this.emitObjective();
+    return true;
+  }
+
+  /** Comms outcome handlers. Returns true when a flag actually flipped. */
+  applyDialogue(id) {
+    const flags = this.state.flags;
+
+    if (id === 'comms1' && !flags.isComms1Done) {
+      flags.isComms1Done = true;
+      this.emitObjective();
+
+      this.bus.emit(EVENTS.TOAST, {
+        text: 'Oxygen leak detected — patch the porthole',
+        icon: 'icon-o2',
+        tone: 'warning'
+      });
+
+      return true;
+    }
+
+    if (id === 'comms2' && !flags.isComms2Done) {
+      flags.isComms2Done = true;
+      this.emitObjective();
+
+      this.bus.emit(EVENTS.TOAST, {
+        text: 'Packet received — check the ship computer',
+        icon: 'icon-objective',
+        tone: 'info'
+      });
+
+      return true;
+    }
+
+    return false;
+  }
+
+  /** Which of the three comms2 attempts to play (silence, silence, contact). */
+  dialComms2() {
+    const quest = this.state.quest;
+    const attempt = quest.comms2Attempts ?? 0;
+
+    quest.comms2Attempts = Math.min(attempt + 1, 3);
+
+    if (attempt === 0) return 'comms2Attempt1';
+    if (attempt === 1) return 'comms2Attempt2';
+    return 'comms2';
+  }
+
+  applyTerminal() {
+    if (this.state.flags.isCoordinatesReceived) return false;
+
+    this.state.flags.isCoordinatesReceived = true;
     this.emitObjective();
 
     this.bus.emit(EVENTS.TOAST, {
-      text: `New objective — survive until Day ${RESCUE_DAY}`,
+      text: 'Coordinates logged — a silent survey rover is on the route',
+      icon: 'icon-objective',
       tone: 'info'
     });
+
+    return true;
   }
 
-  destroy() {
-    this.bus.off(EVENTS.INVENTORY_CHANGED, this.onInventoryChanged);
-    this.bus.off(EVENTS.TRANSMISSION_CLOSED, this.onTransmissionClosed);
+  /** First inspection at the rover: the unit is found, the repair is next. */
+  applyRoverFound() {
+    if (this.state.flags.isRoverFound) return false;
+
+    this.state.flags.isRoverFound = true;
+    this.emitObjective();
+
+    this.bus.emit(EVENTS.TOAST, {
+      text: 'Survey rover found — the battery is flat',
+      icon: 'icon-power',
+      tone: 'info'
+    });
+
+    return true;
   }
 }

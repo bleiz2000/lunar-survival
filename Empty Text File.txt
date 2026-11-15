@@ -1,0 +1,619 @@
+from pathlib import Path
+import zipfile
+
+base = Path("/mnt/data/LUNAR_project_docs")
+base.mkdir(exist_ok=True)
+
+game_design = r"""# LUNAR: SURVIVAL PROTOCOL
+## Game Design & Technical Architecture — Living Project Specification
+
+**Document status:** Initial design baseline  
+**Genre:** 2D top-down survival, exploration, and modular base-building  
+**Primary visual reference:** MewnBase  
+**Technology target:** JavaScript ES Modules, Phaser 3, Vite  
+**Platform target:** Desktop browser first  
+**Team:** Two active contributors, supported by AI coding agents
+
+---
+
+# 1. High concept
+
+The player is a lone astronaut stranded on the Moon after an emergency landing. Their spacecraft is damaged but can serve as the first habitat. Earth initially estimates that a rescue mission will arrive in 30 days. The astronaut must restore essential systems, explore nearby terrain, recover equipment, establish local resource production, and keep the base operational.
+
+The game is about **gradually turning a fragile emergency shelter into a functioning lunar outpost**. It is not a large colony simulator and not a factory automation game.
+
+### Design pillars
+
+1. **Understandable survival:** every critical resource has a clear purpose and visible consequence.
+2. **Hands-on early game:** the astronaut personally explores, collects, repairs, and transports.
+3. **Progressive automation:** a recovered rover and later equipment reduce repetitive manual work.
+4. **Modular base:** rooms and equipment form a readable, expandable habitat.
+5. **Science-inspired fiction:** real lunar science informs mechanics, while invented events are clearly fictional.
+6. **Small, finishable scope:** prioritize one polished playable scenario over many unfinished systems.
+
+# 2. Player experience and camera
+
+- 2D top-down perspective.
+- The astronaut moves freely around a single continuous outdoor map.
+- Camera follows the player and remains inside world bounds.
+- The player can enter or interact with habitat modules; interior implementation may initially be abstracted as room screens or interaction panels.
+- The art direction is friendly, readable, slightly cartoon-like, with clear silhouettes and restrained sci-fi details.
+- Visual reference: MewnBase. Do not copy its assets, UI, or exact layouts.
+
+### Controls (initial target)
+
+| Input | Action |
+|---|---|
+| WASD / arrows | Move |
+| E | Interact with nearby object |
+| Left mouse | Select/build/place UI items |
+| Esc | Pause / close current panel |
+| Tab or I | Inventory |
+
+Controls must be configurable later; do not build a full keybinding menu in the first prototype.
+
+# 3. Core gameplay loop
+
+1. Receive a task, clue, or status update from Earth or the base computer.
+2. Explore the nearby lunar surface.
+3. Find a resource deposit, wreck, research site, or useful object.
+4. Collect, scan, repair, or solve a small environmental problem.
+5. Return resources to the habitat.
+6. Process resources using installed equipment.
+7. Build or repair modules and improve life-support reliability.
+8. Prepare for the next event or environmental challenge.
+
+The player should usually have one clear short-term objective and one longer-term survival pressure.
+
+# 4. Narrative premise and progression
+
+## Starting situation
+
+A crewed mission was expected to perform a short lunar research operation. During landing, the lander suffers a major malfunction. The astronaut survives; the propulsion/return systems and communications equipment are damaged. The spacecraft remains usable as a basic shelter, but its life-support and power capabilities are limited.
+
+After restoring a minimal communications link, Earth reports that a rescue mission is being prepared and estimates **30 days** until arrival.
+
+The campaign's exact win day is a design choice. Recommended version:
+- Initial estimate: rescue in 30 days.
+- Around Day 20, Earth sends an update: the rescue window has improved and arrival is expected on Day 25.
+- Win condition: survive until the rescue vehicle arrives on Day 25 and complete a final landing/beacon objective.
+
+This creates a meaningful early expectation and a late-game acceleration without contradicting the timeline. If the team prefers a 20-day campaign, Earth must instead announce a 10-day acceleration.
+
+## Suggested story beats (adjustable)
+
+| Approx. day | Beat | Gameplay purpose |
+|---|---|---|
+| 1 | Emergency landing; inspect damaged lander | Tutorial, basic movement/interactions |
+| 2 | Restore a limited communications link | Introduce Earth messages and objectives |
+| 3–5 | Locate nearby ice clues and recover basic supplies | Exploration and water chain |
+| 4–7 | Discover a disabled research rover | Introduce repair and gradual automation |
+| 7–9 | Repair rover enough to scan/transport | Reduce manual hauling |
+| 9–12 | Find a remote biological research outpost | First expedition / narrative mystery |
+| 10–14 | Recover a viable fungal culture and starter substrate | Unlock food production |
+| 15–19 | Expand power storage and prepare for low-sun period | Mid-game resource planning |
+| 20 | Earth announces earlier rescue window | Raise stakes and set final objective |
+| 21–24 | Stabilize base, repair beacon, prepare landing area | Endgame checklist |
+| 25 | Rescue arrives | Victory |
+
+These are narrative targets, not hard-coded timers. The playable prototype can compress days substantially.
+
+# 5. Science-inspired systems
+
+Scientific accuracy should support the fiction, not make the game tedious. The game may simplify processes, but must not present speculative or fictional facilities as documented real lunar installations.
+
+## 5.1 Regolith and materials
+
+Lunar regolith is fragmented rock and dust, not ordinary soil. It contains oxygen chemically bound in minerals and elements including silicon, iron, and aluminium.
+
+Potential gameplay progression:
+- Early: collect small quantities of regolith manually.
+- Mid: rover-mounted scoop or drill collects larger quantities.
+- Later: processing equipment separates useful material.
+- Advanced: high-temperature processing / molten regolith electrolysis is a costly research unlock.
+
+Do not make raw regolith instantly become metal or breathable oxygen. Processing requires power, heat, equipment, and time.
+
+## 5.2 Water ice
+
+Water ice is believed to exist in some permanently shadowed lunar regions, especially near the poles. It is not guaranteed to be easily accessible at every landing site.
+
+Gameplay chain:
+1. Receive a broad location clue from Earth.
+2. Use a scanner or repaired rover to identify a promising deposit.
+3. Extract ice-bearing regolith.
+4. Heat it inside a sealed extraction unit.
+5. Capture and condense water vapour.
+6. Filter/purify the collected water before life-support use.
+
+The game may simplify filtration to a filter cartridge and a processing timer. Filters wear out and need replacement or regeneration.
+
+## 5.3 Water electrolysis, oxygen, and hydrogen
+
+Purified water can be split by electrolysis into oxygen and hydrogen. This process consumes electrical energy.
+
+Gameplay chain:
+- Purified water + electricity -> oxygen + hydrogen.
+- Oxygen supports breathing and habitat pressure systems.
+- Hydrogen can be stored as a chemical feedstock or used in a suitable burner/process heater, subject to an oxygen supply and proper equipment.
+- Do not imply hydrogen is a free energy source: producing it required energy.
+
+A regenerative fuel cell is a separate device: it can combine stored hydrogen and oxygen to generate electricity and water. It is useful for energy storage, but conversion losses mean it is not perpetual energy.
+
+## 5.4 Power and lunar day/night
+
+Solar panels are a plausible early power source, but output depends on sunlight, orientation, dust, and local terrain. Long lunar nights create a major storage challenge.
+
+Gameplay progression:
+- Start with damaged or limited imported solar panels and a small battery.
+- Repair panels and reduce unnecessary loads.
+- Build larger storage.
+- Later research locally manufactured solar-cell components from regolith-derived materials.
+
+A lunar night is roughly 14 Earth days in many locations, but exact illumination depends on location and terrain. For a short game, use an intentionally compressed day/night schedule and label it as a gameplay time scale.
+
+## 5.5 Food: fungal culture and hydroponics
+
+There is no reason to assume useful wild mushrooms or fungal spores are naturally available on the Moon. A viable culture must be brought from Earth or recovered from a fictional prior experiment.
+
+NASA has studied fungi in space-related research, but the game’s abandoned lunar biological facility is **fictional**. Present it as a fictional robotic research outpost inspired by real space-biology research, not as a real NASA lunar installation.
+
+Suggested gameplay:
+- Initial emergency food supplies cover the first days.
+- Earth hints at a nearby automated biological experiment.
+- The player reaches the site, restores power, bypasses a damaged access system, and retrieves a sealed viable fungal culture plus a starter growth substrate.
+- The habitat's compact fungal grow chamber produces a modest food supply over time.
+- Later, a hydroponic module can grow leafy crops from seeds and nutrient solution. Seeds and nutrient supplies were part of the mission payload or recovered cargo.
+
+Fungi are not a complete, magically self-sufficient diet. Keep emergency rations relevant and treat the grow chamber as a supplement.
+
+# 6. Rover progression
+
+A disabled robotic rover is found near the landing area or along an Earth-marked route. It was part of an earlier fictional automated survey mission.
+
+Repair progression:
+1. Restore basic power and movement.
+2. Restore short-range communication with the habitat.
+3. Unlock terrain scanning / resource detection.
+4. Restore scoop or drill for regolith and ice-bearing material.
+5. Restore cargo compartment for hauling.
+6. Optional late upgrade: automated trips between known points.
+
+The rover should not instantly automate everything. Each repair stage requires a small quest, components, or resources. Its primary purpose is to shift the player from repetitive hauling toward exploration and base management.
+
+# 7. Exploration, quests, and environmental storytelling
+
+Use clues rather than exposition dumps:
+- Earth messages with coordinates and partial scientific explanations.
+- Damaged rover logs.
+- Research terminal entries.
+- Audio/text logs from the fictional biological outpost.
+- Equipment labels and warning signs.
+- Unusual terrain formations and abandoned cargo.
+- Optional discoveries that reveal why the previous robotic mission stopped.
+
+Each expedition should contain at least one meaningful action: restore power, reroute a circuit, find a key component, scan a location, manage a hazard, or solve a simple spatial puzzle. Avoid “walk there, pick up item, walk back” as the only quest pattern.
+
+Scientific references should be phrased carefully. If a detail is not verified, mark it as fictional inspiration in the design rather than claiming NASA did it.
+
+# 8. Resources and production chains
+
+Keep the first playable version small. Candidate resource set:
+
+| Resource | Main use | Acquisition |
+|---|---|---|
+| Regolith | Construction / processing feedstock | Manual collection, rover |
+| Metal parts | Repairs and equipment | Starting stock, salvage, later processing |
+| Ice | Water source | Scanner + extraction |
+| Purified water | Drinking, electrolysis, agriculture | Ice processing + filtration |
+| Oxygen | Breathing / life support | Electrolysis |
+| Hydrogen | Storage / process fuel / fuel cell | Electrolysis |
+| Power | All powered equipment | Solar + batteries / fuel cell |
+| Food | Survival | Rations + fungal grow chamber |
+
+Avoid adding dozens of materials until the core loop is fun.
+
+### Key dependencies
+
+- Ice -> raw water -> filtration -> purified water.
+- Purified water + power -> electrolysis -> oxygen + hydrogen.
+- Hydrogen + oxygen -> fuel cell -> electricity + water (with losses).
+- Regolith + heat + advanced processor -> useful materials / oxygen (late game).
+- Fungal culture + substrate + water + controlled environment -> food over time.
+- Solar panels -> power; batteries store power but do not generate it.
+
+# 9. Survival pressures
+
+The first version should model only a few understandable pressures:
+- Oxygen reserve / consumption.
+- Food reserve / consumption.
+- Power reserve / production.
+- Water reserve / consumption.
+
+Health can be a simple fail-state buffer in the first prototype. Temperature, radiation, dust contamination, pressure leaks, and equipment wear are later features (P2), not launch requirements.
+
+The UI must communicate why a resource is declining and what action can fix it. Avoid invisible death timers.
+
+# 10. Base building and modularity
+
+The base begins as the damaged lander/habitat. The player adds connected room modules.
+
+Initial module types:
+- Habitat / command module.
+- Storage.
+- Workshop.
+- Water processing module.
+- Power module.
+- Fungal grow chamber.
+- Later: laboratory / hydroponics / advanced regolith processor.
+
+A module has:
+- Unique ID.
+- Type.
+- Grid position / footprint.
+- Rotation (optional later).
+- Health / condition.
+- Power demand or production.
+- Operational state.
+- Optional input/output resource definitions.
+
+For the first version, modules can be placed on a grid and connected through door/connector points. Do not implement complex room pressure simulation, pipe routing, or electrical cable routing yet. Use a simple “connected to base” rule.
+
+# 11. User interface
+
+Main menu:
+- New Game
+- Continue (only when save system exists)
+- Settings
+- Credits
+
+In-game HUD:
+- Day / mission timer.
+- Oxygen, food, water, power.
+- Current objective.
+- Interaction prompt.
+- Inventory shortcut.
+- Build menu shortcut.
+
+Panels:
+- Inventory.
+- Nearby object interaction.
+- Building placement.
+- Machine status / recipe.
+- Earth communications / quest log.
+
+Keep the interface readable at common desktop resolutions. UI should be separate from world rendering and should not be hard-coded into gameplay systems.
+
+# 12. Technical architecture
+
+## Stack
+
+- JavaScript ES Modules.
+- Phaser 3 for rendering, scenes, input, camera, physics/collisions where useful.
+- Vite for local development and production bundling.
+- HTML/CSS for page shell and any DOM-based overlays.
+- Git for version control.
+- GitHub private repository for collaboration.
+
+Do not introduce React, a backend, multiplayer, or a database unless a later requirement justifies it.
+
+## Suggested directory structure
+
+```text
+lunar-survival/
+├── public/
+│   └── assets/
+│       ├── characters/
+│       ├── buildings/
+│       ├── environment/
+│       ├── rover/
+│       ├── ui/
+│       └── audio/
+├── src/
+│   ├── main.js
+│   ├── game/
+│   │   ├── gameConfig.js
+│   │   ├── constants.js
+│   │   └── events.js
+│   ├── scenes/
+│   │   ├── BootScene.js
+│   │   ├── PreloadScene.js
+│   │   ├── MainMenuScene.js
+│   │   ├── GameScene.js
+│   │   └── PauseScene.js
+│   ├── entities/
+│   │   ├── Astronaut.js
+│   │   ├── Rover.js
+│   │   ├── Building.js
+│   │   └── Interactable.js
+│   ├── systems/
+│   │   ├── MovementSystem.js
+│   │   ├── InteractionSystem.js
+│   │   ├── InventorySystem.js
+│   │   ├── ResourceSystem.js
+│   │   ├── BuildingSystem.js
+│   │   ├── SurvivalSystem.js
+│   │   ├── QuestSystem.js
+│   │   └── SaveSystem.js
+│   ├── world/
+│   │   ├── WorldMap.js
+│   │   ├── WorldGenerator.js
+│   │   └── CameraController.js
+│   ├── data/
+│   │   ├── buildings.js
+│   │   ├── items.js
+│   │   ├── recipes.js
+│   │   ├── quests.js
+│   │   └── events.js
+│   ├── ui/
+│   │   ├── HUD.js
+│   │   ├── InventoryPanel.js
+│   │   ├── InteractionPanel.js
+│   │   ├── BuildMenu.js
+│   │   ├── MachinePanel.js
+│   │   └── MessagePanel.js
+│   └── utils/
+│       ├── distance.js
+│       └── validation.js
+├── docs/
+│   └── GAME_DESIGN.md
+├── CHANGELOG.md
+├── index.html
+├── package.json
+├── vite.config.js
+├── .gitignore
+└── README.md
+```
+
+This is the **target architecture**, not a requirement to create every file immediately. Add modules only when they have real responsibility.
+
+## Responsibilities and boundaries
+
+- `main.js`: create and start the Phaser game. No gameplay rules.
+- `game/`: global configuration, constants, event names.
+- `scenes/`: lifecycle and composition of screens. Scenes coordinate systems; they should not contain every rule.
+- `entities/`: state and behavior of individual world objects.
+- `systems/`: reusable gameplay rules (movement, inventory, resource processing, quests).
+- `world/`: map, world boundaries, camera.
+- `data/`: declarative definitions for items, buildings, recipes, quests. Prefer data-driven content over giant switch statements.
+- `ui/`: display and user input for panels. UI calls system APIs; it does not directly mutate unrelated game state.
+- `utils/`: small pure helper functions.
+
+## Core data concepts
+
+Use simple, serializable objects where possible.
+
+**GameState**
+- day
+- astronaut position
+- inventory
+- resource balances
+- placed buildings
+- machine states
+- rover repair stage
+- quest flags
+- survival meters
+
+**ItemDefinition**
+- id
+- displayName
+- category
+- stackLimit
+- description
+
+**BuildingDefinition**
+- id
+- displayName
+- footprint
+- buildCost
+- powerUse / powerOutput
+- recipe or function
+- unlock condition
+
+**RecipeDefinition**
+- id
+- input resources
+- output resources
+- processing duration
+- power requirement
+
+**QuestDefinition**
+- id
+- title
+- objective steps
+- prerequisites
+- completion rewards
+- associated message / log
+
+Avoid overengineering with complex inheritance, dependency injection frameworks, or an ECS unless the project genuinely needs one.
+
+## System interaction rules
+
+- Systems own gameplay rules and state changes.
+- UI requests actions through systems.
+- Entities represent in-world objects and expose clear methods.
+- Data files define content; systems interpret the data.
+- Use Phaser events or a small internal event bus for loose coupling where useful.
+- Keep save data serializable; do not attempt to serialize Phaser display objects.
+- Do not store duplicate copies of the same resource balance in UI and gameplay state.
+
+## Initial implementation milestones
+
+### P0 — Playable foundation
+1. Project boots through Vite.
+2. Main menu opens the game scene.
+3. Lunar map renders.
+4. Astronaut moves with WASD.
+5. Camera follows astronaut and respects map bounds.
+6. One interactable object displays an E prompt.
+7. HUD displays placeholder survival values.
+8. Build succeeds without console errors.
+
+### P1 — First gameplay loop
+1. Inventory and manual resource collection.
+2. Basic interaction system.
+3. One buildable module.
+4. Resource storage and simple machine recipe.
+5. Day counter and simple survival consumption.
+6. Rover discovery and first repair quest.
+
+### P2 — Campaign systems
+1. Ice extraction and water purification.
+2. Electrolysis and hydrogen storage.
+3. Fungal research expedition and grow chamber.
+4. Power storage / low-sun challenge.
+5. Additional modules, logs, events, and ending.
+6. Save/load and polish.
+
+# 13. Scope control: what NOT to build first
+
+Do not implement in the initial prototype:
+- Multiplayer.
+- Procedural infinite world.
+- Complex physics simulation.
+- Full lunar orbital mechanics.
+- Detailed pressure / oxygen simulation per room.
+- Complex power grids or pipes.
+- Full hydroponic crop simulation.
+- Advanced regolith metallurgy.
+- Dozens of resources.
+- Mobile support.
+- Online accounts or server backend.
+
+# 14. Definition of a successful first prototype
+
+A player can:
+1. Start from a main menu.
+2. Enter a lunar surface scene.
+3. Move the astronaut around.
+4. See the camera follow.
+5. Approach an object and interact.
+6. See a basic HUD and objective.
+7. Build and run the project locally with documented commands.
+
+The first prototype is not yet the full game. It proves the technical foundation and visual direction.
+
+# 15. Team workflow
+
+- Keep `main` stable.
+- Use short feature branches for substantial changes.
+- Make small commits with meaningful messages.
+- Pull before starting work.
+- Avoid having two people edit the same file simultaneously.
+- Test `npm run build` before merging.
+- Do not commit secrets, tokens, local environment files, or generated dependency folders.
+- Every AI agent must update `CHANGELOG.md` after it changes project files.
+
+# 16. Open design decisions
+
+These are intentionally unresolved and should be decided after the first prototype:
+- Exact map dimensions and landing-site location.
+- Pixel art versus smooth hand-drawn vector-like sprites.
+- Whether interiors are separate scenes or camera transitions.
+- Exact survival consumption rates and day length.
+- Whether the win day is Day 25 or another agreed value.
+- Whether the first version uses placeholder art or a small custom asset pack.
+- Exact number of buildable modules in the first playable campaign.
+"""
+
+agent_log = r"""# AI AGENT WORK LOG — LUNAR
+
+This file is a mandatory, continuously maintained record of changes made by AI coding agents.
+
+## Rules for every agent
+
+1. Read `docs/GAME_DESIGN.md` and this file before making changes.
+2. Before editing, inspect the current repository and report the relevant existing state.
+3. Do only the task explicitly requested. Do not silently expand scope.
+4. After making changes, append a new entry to this file.
+5. Never delete or rewrite previous entries. Append a new dated entry.
+6. Be factual. Do not claim a feature works unless you ran an appropriate check.
+7. Record failed attempts and known issues as well as successful changes.
+8. Do not write secrets, access tokens, passwords, or private personal data here.
+9. Do not modify `docs/GAME_DESIGN.md` unless the task explicitly asks you to. If design requirements conflict or appear ambiguous, report the conflict.
+10. Do not create commits or push to GitHub unless explicitly requested.
+
+## Required entry format
+
+Append one entry per task/session:
+
+---
+
+## YYYY-MM-DD — Short task title
+
+**Agent/model:**  
+Name the agent/model if known; otherwise write `Not specified`.
+
+**Requested task:**  
+Briefly restate what was requested.
+
+**Repository state before work:**
+- Current branch:
+- Working tree status:
+- Relevant files inspected:
+
+**Files created:**
+- List files, or `None`.
+
+**Files modified:**
+- List files and explain what changed, or `None`.
+
+**Files deleted:**
+- List files, or `None`.
+
+**Implementation details:**
+- Explain the actual changes.
+- Mention important design or architecture decisions.
+- Mention dependencies added/removed and why.
+
+**Verification performed:**
+- Commands executed:
+- Build/test result:
+- Manual checks:
+- If no verification was possible, explain why.
+
+**Known issues / incomplete work:**
+- List remaining problems, limitations, or `None`.
+
+**Next recommended step:**
+- One small, concrete next action.
+
+---
+
+## Initial entry
+
+## 2026-11-13 — Work log initialized
+
+**Agent/model:** Not specified.
+
+**Requested task:** Establish a persistent record of AI-agent actions and project changes.
+
+**Repository state before work:** Not inspected by this document author.
+
+**Files created:** `CHANGELOG.md` (this file).
+
+**Files modified:** None.
+
+**Files deleted:** None.
+
+**Implementation details:** Added mandatory append-only work-log instructions and a standard entry template.
+
+**Verification performed:** Not applicable; documentation only.
+
+**Known issues / incomplete work:** The actual repository state and whether this file has been added to the project must be verified by the coding agent.
+
+**Next recommended step:** Add `docs/GAME_DESIGN.md` and verify both documents are present in the project root/docs structure.
+"""
+
+(base / "GAME_DESIGN.md").write_text(game_design, encoding="utf-8")
+(base / "CHANGELOG.md").write_text(agent_log, encoding="utf-8")
+
+zip_path = Path("/mnt/data/LUNAR_project_docs.zip")
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    z.write(base / "GAME_DESIGN.md", "docs/GAME_DESIGN.md")
+    z.write(base / "CHANGELOG.md", "CHANGELOG.md")
+
+print("Created:")
+print(base / "GAME_DESIGN.md")
+print(base / "CHANGELOG.md")
+print(zip_path)

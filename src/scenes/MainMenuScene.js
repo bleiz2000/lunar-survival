@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import {
   SCENE_MAIN_MENU,
-  SCENE_GAME,
+  SCENE_INTRO,
   GAME_WIDTH,
   GAME_HEIGHT,
   UI,
@@ -261,7 +261,7 @@ export class MainMenuScene extends Phaser.Scene {
     if (this.modal) return;
 
     this.cameras.main.fadeOut(380, 4, 6, 12);
-    this.time.delayedCall(380, () => this.scene.start(SCENE_GAME));
+    this.time.delayedCall(380, () => this.scene.start(SCENE_INTRO));
   }
 
   // ── modals ─────────────────────────────────────────────────

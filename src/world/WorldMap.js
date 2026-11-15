@@ -123,16 +123,9 @@ export class WorldMap {
   }
 
   createLander() {
-    const point = this.getLanderPoint();
-
-    this.lander = this.scene.add
-      .image(point.x, point.y, 'lander')
-      .setDepth(6);
-
-    // Invisible static body covering the hull and the leg base.
-    const zone = this.scene.add.zone(point.x, point.y + 34, 140, 66);
-    this.scene.physics.add.existing(zone, true);
-    this.solids.push(zone);
+    // The lander image and its collision body live in world/Outpost.js —
+    // there the tilted hull and the straightened flow are managed together.
+    // Here we only expose the lander point for Outpost to build on.
   }
 
   createBoulders() {

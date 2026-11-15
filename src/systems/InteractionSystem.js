@@ -52,7 +52,9 @@ export class InteractionSystem {
     this.bus.emit(EVENTS.PROMPT_SHOW, {
       key: INTERACT_KEY,
       label: interactable.label,
-      prompt: interactable.getPromptText()
+      prompt: interactable.getPromptText(),
+      // World-space anchor for the floating tag above the object itself.
+      sprite: interactable.sprite
     });
   }
 

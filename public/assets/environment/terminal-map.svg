@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="300" viewBox="0 0 520 300">
+  <defs>
+    <linearGradient id="tmBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#101A2C"/>
+      <stop offset="100%" stop-color="#0A1220"/>
+    </linearGradient>
+    <radialGradient id="tmScan" cx="86%" cy="30%" r="44%">
+      <stop offset="0%" stop-color="#7FE3A0" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#7FE3A0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tmHazard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F2B36A"/>
+      <stop offset="100%" stop-color="#E4853C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- map plate -->
+  <rect x="3" y="3" width="514" height="294" rx="10" fill="url(#tmBase)" stroke="#5E7088" stroke-width="3"/>
+  <rect x="3" y="3" width="514" height="294" rx="10" fill="url(#tmScan)"/>
+
+  <!-- coordinate grid -->
+  <g stroke="#22303F" stroke-width="1.2">
+    <path d="M80 3 V297"/><path d="M160 3 V297"/><path d="M240 3 V297"/>
+    <path d="M320 3 V297"/><path d="M400 3 V297"/><path d="M440 3 V297"/>
+    <path d="M3 72 H517"/><path d="M3 144 H517"/><path d="M3 216 H517"/>
+  </g>
+  <!-- sector labels, mono style -->
+  <g font-family="'Consolas','SFMono-Regular',monospace" font-size="11" fill="#4E6076">
+    <text x="10" y="18">7-A</text>
+    <text x="486" y="291">7-B</text>
+  </g>
+
+  <!-- terrain features: subtle crater uplands -->
+  <g stroke="#2A3A4C" stroke-width="1.6" fill="none">
+    <ellipse cx="120" cy="80" rx="46" ry="26"/>
+    <ellipse cx="330" cy="220" rx="60" ry="30" opacity="0.8"/>
+    <ellipse cx="250" cy="130" rx="26" ry="16" opacity="0.7"/>
+  </g>
+  <g fill="#22303F">
+    <ellipse cx="120" cy="88" rx="40" ry="20" opacity="0.9"/>
+    <ellipse cx="440" cy="160" rx="34" ry="16" opacity="0.8"/>
+  </g>
+  <g fill="#22303F" opacity="0.9">
+    <ellipse cx="386" cy="250" rx="40" ry="12"/>
+  </g>
+
+  <!-- route: dashed tract from SHIP-01 to the bio research outpost -->
+  <path d="M86 230 Q86 170 150 150 Q230 126 300 120 Q360 115 404 90"
+        fill="none" stroke="#7FE3A0" stroke-width="2.4" stroke-dasharray="9 8" opacity="0.9"/>
+  <g fill="#7FE3A0">
+    <path d="M300 120 L308 116 L308 124 Z" opacity="0.95"/>
+  </g>
+  <text x="238" y="112" font-family="'Consolas','SFMono-Regular',monospace"
+        font-size="12" fill="#8FD4EC" letter-spacing="1.5">RANGE 4.2 KM · NE</text>
+
+  <!-- SHIP-01 marker (bottom-left) -->
+  <g>
+    <circle cx="86" cy="230" r="7" fill="#F2B36A"/>
+    <path d="M86 222 L92 232 L80 232 Z" fill="#F2F6FB"/>
+    <circle cx="86" cy="230" r="16" fill="none" stroke="url(#tmHazard)" stroke-width="2.4" opacity="0.85"/>
+    <circle cx="86" cy="230" r="22" fill="none" stroke="#E4853C" stroke-width="1.2" opacity="0.4"/>
+    <text x="86" y="264" text-anchor="middle" font-family="'Consolas','SFMono-Regular',monospace"
+          font-size="11" fill="#B9C4D6" letter-spacing="2">SHIP-01</text>
+  </g>
+
+  <!-- target marker: abandoned bio research outpost (top-right) -->
+  <g>
+    <!-- sealed culture canister marker -->
+    <path d="M404 78 Q400 66 384 64"
+          fill="none" stroke="#8FD4EC" stroke-width="2" opacity="0.6"/>
+    <g transform="translate(404,84)" stroke-linejoin="round">
+      <path d="M-7 -12 H7 L9 -8 V8 L6 12 H-6 L-9 8 V-8 Z"
+            fill="#6C879A" stroke="#B9D7E6" stroke-width="1.8"/>
+      <rect x="-5" y="-5" width="10" height="9" rx="2"
+            fill="#173348" stroke="#7FE3C0" stroke-width="1.4"/>
+      <path d="M-4 1 Q0 -3 4 1 V3 H-4 Z" fill="#A8E6C9" opacity="0.9"/>
+      <path d="M-4 -14 H4" stroke="#DCE5F2" stroke-width="2.2" stroke-linecap="round"/>
+      <circle cx="0" cy="-8" r="1.6" fill="#7FE3C0"/>
+    </g>
+    <!-- corner brackets -->
+    <g stroke="#7FE3A0" stroke-width="2.2" fill="none">
+      <path d="M386 60 V42 H422"/>
+      <path d="M446 60 V42 H410"/>
+      <path d="M386 108 V126 H422"/>
+      <path d="M446 108 V126 H410"/>
+    </g>
+    <text x="413" y="152" text-anchor="middle" font-family="'Consolas','SFMono-Regular',monospace"
+          font-size="11" fill="#7FE3A0" letter-spacing="1.6">BIO RESEARCH OUTPOST</text>
+  </g>
+</svg>

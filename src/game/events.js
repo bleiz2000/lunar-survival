@@ -16,14 +16,19 @@ export const EVENTS = {
 
   // quest / narrative
   OBJECTIVE_CHANGED: 'quest:objective-changed',
-  RADIO_REPAIRED: 'world:radio-repaired',
-  TRANSMISSION: 'ui:transmission',
-  TRANSMISSION_CLOSED: 'ui:transmission-closed',
+  DIALOGUE: 'ui:dialogue',
+  DIALOGUE_CLOSED: 'ui:dialogue-closed',
+  TERMINAL: 'ui:terminal',
+  TERMINAL_CLOSED: 'ui:terminal-closed',
+  DIAGNOSTICS: 'ui:diagnostics',
+  DIAGNOSTICS_CLOSED: 'ui:diagnostics-closed',
+
+  // timed world actions (WorldAction emits ACTION_END when done)
+  ACTION_END: 'ui:action-end',
 
   // ui
   TOAST: 'ui:toast',
   MODAL: 'ui:modal',
-  INVENTORY_TOGGLED: 'ui:inventory-toggled',
   MENU_REQUEST: 'ui:menu-request'
 };
 

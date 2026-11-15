@@ -103,4 +103,10 @@ export class UiButton extends Phaser.GameObjects.Container {
       this.setInteractive({ useHandCursor: true });
     }
   }
+
+  setText(label) {
+    this.label = label;
+    this.text.setText(label);
+    return this;
+  }
 }
