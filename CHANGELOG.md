@@ -776,3 +776,36 @@ Update `CHANGELOG.md` after the rover clarification discussion.
 
 **Next recommended step:**
 If desired, redesign `public/assets/rover/rover-derelict.svg` and `rover-powered.svg` with a more open, civilian research silhouette, then regenerate the demo assets.
+
+---
+
+## 2026-11-15 — Update the project tracker for NASA Space Apps
+
+**Agent/model:**
+DeepSeek V4.1 Flash 1017 (OpenCode).
+
+**Requested task:**
+Update `TODO.md` to match the current project state.
+
+**Files modified:**
+- `TODO.md` — added Chapter 12 covering the NASA Space Apps 2026 presentation,
+  demo assets, direct raw links, rover clarification and remaining submission
+  steps. Updated the rover line in Chapter 1 to identify it as a fictional,
+  unarmed civilian vehicle.
+- `CHANGELOG.md` — recorded this task.
+
+**Implementation details:**
+- Marked completed presentation work with `[x]`.
+- Marked the NASA Project Tab submission as `[!]` because it requires the team
+  owner to sign in and click **Submit for Judging**.
+- Left optional art and real-gameplay-video improvements unchecked.
+
+**Verification performed:**
+- `git diff --check` — passed.
+- Documentation-only change; no build required.
+
+**Known issues / incomplete work:**
+- The NASA form itself is still awaiting the team owner's authenticated submission.
+
+**Next recommended step:**
+Submit the Project Tab before the Local Event deadline, then update the tracker.
