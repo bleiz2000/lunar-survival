@@ -748,3 +748,31 @@ Clarify the rover shown in the screenshots and update the local project files ac
 
 **Next recommended step:**
 Keep the user-facing wording consistent if the rover artwork is redesigned later.
+
+---
+
+## 2026-11-15 — Record the survey rover's purpose and design rationale
+
+**Agent/model:**
+DeepSeek V4.1 Flash 1017 (OpenCode).
+
+**Requested task:**
+Update `CHANGELOG.md` after the rover clarification discussion.
+
+**Files modified:**
+- `CHANGELOG.md` — added this entry. No gameplay, artwork, or demo files were changed.
+
+**Implementation details:**
+- Recorded that the survey rover is a fictional, unarmed civilian research vehicle. Its angular chassis, six wheels, solar deck and beacon can read as military hardware in screenshots, but it is not a tank or armored vehicle.
+- Recorded its intended progression role from `docs/GAME_DESIGN.md` §6: the rover is the first field objective after restoring communications, and later becomes transport, a scanner, a sampling/hauling platform and partial automation. The current prototype implements only discovery, inspection and the first basic power-up; driving, scanning and cargo transport are future work.
+- Noted that the artwork may be redesigned later to read more clearly as a lunar rover (open frame, manipulator, science instruments).
+
+**Verification performed:**
+- `git status --short --branch` — clean before this documentation edit.
+- No build required; documentation-only change.
+
+**Known issues / incomplete work:**
+- The rover's visual silhouette still resembles a tracked/armored vehicle at small sizes. This is an art-direction issue, not a lore or gameplay claim.
+
+**Next recommended step:**
+If desired, redesign `public/assets/rover/rover-derelict.svg` and `rover-powered.svg` with a more open, civilian research silhouette, then regenerate the demo assets.
