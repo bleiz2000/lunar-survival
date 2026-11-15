@@ -10,11 +10,9 @@ LUNAR: Survival Protocol is an early 2D browser-game prototype about an astronau
 
 ## Link to Project Demo
 
-Video demo (28 seconds): https://github.com/bleiz2000/lunar-survival/blob/main/NASA_SPACE_APPS_DEMO.mp4
+https://raw.githubusercontent.com/bleiz2000/lunar-survival/main/docs/demo/lunar-survival-demo.mp4
 
-Seven-slide deck: https://github.com/bleiz2000/lunar-survival/blob/main/NASA_SPACE_APPS_DEMO_SLIDES.pdf
-
-[Upload is not complete until these files are committed and pushed to the public GitHub repository. The NASA guide accepts a video of 30 seconds or less or a deck of up to seven slides.]
+28-second video demo. Direct public link; no login required. The seven-slide PDF version is also available at `docs/demo/lunar-survival-demo-slides.pdf`.
 
 ## Link to Final Project
 
@@ -56,9 +54,9 @@ During the hackathon, we developed an early playable slice of a lunar survival g
 
 ## Before submitting — remove this checklist
 
-- Add the public demo link above. NASA’s official guide requires either a video of 30 seconds or less or a slide deck of up to seven slides.
+- Public demo link added and verified as a direct raw GitHub URL (no login required).
 - Verify all project teammates’ names and any AI disclosure / generated-asset disclosures are accurate.
-- Open the GitHub link in a private/incognito browser to verify it is publicly accessible. This has been checked: the repository is public.
+- Open the GitHub and demo links in a private/incognito browser to confirm public access. Repository and raw demo links have been checked.
 - On the NASA Project page, save progress, then explicitly click **Submit for Judging** before your Local Event deadline. Saving alone does not submit the project.
 
 Official submission guide: https://www.spaceappschallenge.org/resources/project-submission-guide/

@@ -31,7 +31,7 @@ Open the local URL printed by Vite. Use **WASD** or the **arrow keys** to move a
 
 ## Project links
 
-- [Watch the 28-second project demo](https://github.com/bleiz2000/lunar-survival/blob/main/NASA_SPACE_APPS_DEMO.mp4)
-- [View the seven-slide project demo](https://github.com/bleiz2000/lunar-survival/blob/main/NASA_SPACE_APPS_DEMO_SLIDES.pdf)
+- [Watch the 28-second project demo](https://raw.githubusercontent.com/bleiz2000/lunar-survival/main/docs/demo/lunar-survival-demo.mp4)
+- [View the seven-slide project demo](https://raw.githubusercontent.com/bleiz2000/lunar-survival/main/docs/demo/lunar-survival-demo-slides.pdf)
 - [GitHub repository](https://github.com/bleiz2000/lunar-survival)
 - [NASA Space Apps Challenge](https://www.spaceappschallenge.org/2026/)

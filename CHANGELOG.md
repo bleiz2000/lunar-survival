@@ -677,3 +677,45 @@ Update the project presentation for NASA Space Apps and GitHub based on the actu
 
 **Next recommended step:**
 Commit the documentation update and push `main` so the public repository presents the current project state.
+
+---
+
+## 2026-11-15 — Publish demo files and direct raw links
+
+**Agent/model:**
+DeepSeek V4.1 Flash 1017 (OpenCode).
+
+**Requested task:**
+Place the project demo inside the repository under `docs/demo/`, obtain direct public `raw.githubusercontent.com` links, put the demo link into the NASA submission file, then commit and push.
+
+**Repository state before work:**
+- Current branch: `main`, synchronized with `origin/main` at `684d099`.
+- Working tree: clean.
+- Relevant files inspected: `NASA_SPACE_APPS_SUBMISSION.md`, `README.md`, `docs/demo/`, and the generated demo files.
+
+**Files created:** None.
+
+**Files modified / moved:**
+- `NASA_SPACE_APPS_DEMO.mp4` → `docs/demo/lunar-survival-demo.mp4`
+- `NASA_SPACE_APPS_DEMO_SLIDES.pdf` → `docs/demo/lunar-survival-demo-slides.pdf`
+- `NASA_SPACE_APPS_DEMO_SCRIPT.md` → `docs/demo/demo-script.md`
+- `NASA_SPACE_APPS_SUBMISSION.md` — filled the **Link to Project Demo** field with the direct raw GitHub URL.
+- `README.md` — project demo links now point to the raw files.
+- `CHANGELOG.md` — recorded this task.
+
+**Implementation details:**
+- The primary Project Demo link is `https://raw.githubusercontent.com/bleiz2000/lunar-survival/main/docs/demo/lunar-survival-demo.mp4`.
+- The seven-slide PDF remains available at `docs/demo/lunar-survival-demo-slides.pdf`.
+- Raw GitHub links require no login and point directly at the committed files.
+
+**Verification performed:**
+- `ffprobe` — video duration 28 seconds (within NASA's 30-second limit).
+- `pdfinfo` — seven pages.
+- `npm run build` — passed before this packaging change.
+- Raw URLs checked with HTTP requests after push.
+
+**Known issues / incomplete work:**
+- None for packaging. NASA form submission still requires the team to be signed in and to click **Submit for Judging**.
+
+**Next recommended step:**
+Paste the final field values into the NASA Project page, verify the raw demo link in a private browser, and submit before the deadline.
