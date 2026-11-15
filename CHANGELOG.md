@@ -654,6 +654,8 @@ Update the project presentation for NASA Space Apps and GitHub based on the actu
 
 **Files modified:**
 - `README.md` — replaced obsolete initialization-only claims and stale project structure with the current playable-slice summary, controls, run/build instructions, verified technology/context references, and project links.
+- `NASA_SPACE_APPS_SUBMISSION.md` — prepared copy-ready English Project Tab content based on the official 2026 Project Submission Guide, including a placeholder for the required public demo URL, SI disclosure review note, and submission checklist.
+- `NASA_SPACE_APPS_DEMO.mp4`, `NASA_SPACE_APPS_DEMO_SLIDES.pdf`, and `NASA_SPACE_APPS_DEMO_SCRIPT.md` — created a 28-second, no-voice demo video, an exactly seven-slide visual demo deck, and a 30-second narration/caption script. The gameplay screenshots are visibly marked as AI-assisted prototype visuals; team review of asset provenance and NASA's exact AI-generated content policy remains required.
 - `CHANGELOG.md` — recorded this task.
 - GitHub repository metadata — updated repository description and added relevant topics (`phaser`, `lunar`, `survival-game`, `nasa-space-apps`).
 
@@ -667,6 +669,8 @@ Update the project presentation for NASA Space Apps and GitHub based on the actu
 **Verification performed:**
 - `npm run build` — passed; Vite reported its existing large-bundle advisory.
 - GitHub CLI authentication verified with `gh auth status`.
+- `git diff --check` — passed.
+- GitHub metadata and README verified on the public repository after push; local branch is synchronized with `origin/main`.
 
 **Known issues / incomplete work:**
 - The published GitHub `main` branch did not yet contain local commit `d45a47f` when this entry was written; pushing is still required for GitHub's README to show the current prototype.
